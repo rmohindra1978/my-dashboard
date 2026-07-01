@@ -1356,11 +1356,21 @@
     }
 
     function saveData() {
-      localStorage.setItem(storageKey, JSON.stringify(app.data));
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(app.data));
+      } catch (error) {
+        console.error("Failed to save data to localStorage", error);
+        alert("Unable to save data: storage may be full. Please export your data as JSON to avoid losing changes.");
+      }
     }
 
     function init() {
-      document.documentElement.dataset.theme = localStorage.getItem(themeKey) || "light";
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem(themeKey) || "light";
+      } catch (error) {
+        console.warn("Could not read theme preference", error);
+        document.documentElement.dataset.theme = "light";
+      }
       renderNav();
       hydrateFilters();
       bindFilters();
@@ -1413,6 +1423,10 @@
             event.target.value = "";
           }
         };
+        reader.onerror = () => {
+          alert("Failed to read file: " + (reader.error ? reader.error.message : "unknown error"));
+          event.target.value = "";
+        };
         reader.readAsText(file);
       });
     }
@@ -1443,7 +1457,18 @@
         simulation: renderSimulationLab,
         reports: renderReports
       }[app.currentTab];
-      renderer();
+      if (!renderer) {
+        console.error("No renderer found for tab:", app.currentTab);
+        app.currentTab = "overview";
+        renderOverview();
+      } else {
+        try {
+          renderer();
+        } catch (error) {
+          console.error("Error rendering tab '" + app.currentTab + "':", error);
+          document.getElementById("page").innerHTML = '<div class="empty-state">Something went wrong rendering this view. Please try again or switch tabs.</div>';
+        }
+      }
       renderNav();
     }
 
@@ -2708,7 +2733,11 @@
 
     function resetDemoData() {
       if (!confirm("Reset all dashboard records to demo data?")) return;
-      localStorage.removeItem(storageKey);
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {
+        console.warn("Could not clear stored data", error);
+      }
       app.data = defaultData();
       hydrateFilters();
       saveData();
@@ -2735,11 +2764,16 @@
     }
 
     function saveSnapshot() {
-      const snapshots = getSnapshots();
-      snapshots.push({ createdAt: new Date().toISOString(), metrics: executiveMetrics(), data: app.data });
-      localStorage.setItem(snapshotKey, JSON.stringify(snapshots.slice(-12)));
-      alert("Snapshot saved.");
-      if (app.currentTab === "reports") render();
+      try {
+        const snapshots = getSnapshots();
+        snapshots.push({ createdAt: new Date().toISOString(), metrics: executiveMetrics(), data: app.data });
+        localStorage.setItem(snapshotKey, JSON.stringify(snapshots.slice(-12)));
+        alert("Snapshot saved.");
+        if (app.currentTab === "reports") render();
+      } catch (error) {
+        console.error("Failed to save snapshot", error);
+        alert("Snapshot save failed: " + error.message);
+      }
     }
 
     function compareSnapshots() {
@@ -2770,7 +2804,9 @@
     function getSnapshots() {
       try {
         return JSON.parse(localStorage.getItem(snapshotKey) || "[]");
-      } catch {
+      } catch (error) {
+        console.error("Snapshot data corrupted, resetting", error);
+        try { localStorage.removeItem(snapshotKey); } catch (_) { /* ignore */ }
         return [];
       }
     }
@@ -2778,7 +2814,11 @@
     function toggleTheme() {
       const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
       document.documentElement.dataset.theme = next;
-      localStorage.setItem(themeKey, next);
+      try {
+        localStorage.setItem(themeKey, next);
+      } catch (error) {
+        console.warn("Could not persist theme preference", error);
+      }
       render();
     }
 
@@ -3011,6 +3051,10 @@
     function loadAcqTarget() {
       const id = document.getElementById("acqTargetSelect").value;
       const lead = app.data.pcpLeads.find(l => l.leadId === id) || app.data.pcpLeads[0];
+      if (!lead) {
+        console.warn("No acquisition targets available to load");
+        return;
+      }
       setInputs({
         acqPurchasePrice: lead.askingPrice,
         acqRevenue: lead.estimatedRevenue,
@@ -3230,8 +3274,19 @@
     }
 
     function copyReport() {
-      const text = document.getElementById("reportBox").textContent;
-      navigator.clipboard.writeText(text).then(() => alert("Report copied."));
+      const box = document.getElementById("reportBox");
+      if (!box) {
+        alert("No report to copy. Generate a report first.");
+        return;
+      }
+      const text = box.textContent;
+      navigator.clipboard.writeText(text).then(
+        () => alert("Report copied."),
+        (error) => {
+          console.error("Clipboard write failed", error);
+          alert("Could not copy to clipboard. Please select the report text and copy manually.");
+        }
+      );
     }
 
     function exportReportText() {
@@ -3644,13 +3699,18 @@
     }
 
     function downloadFile(filename, text, type) {
-      const blob = new Blob([text], { type });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
+      try {
+        const blob = new Blob([text], { type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("File download failed", error);
+        alert("Download failed: " + error.message);
+      }
     }
 
     function escapeHtml(value) {
@@ -3661,7 +3721,12 @@
       return escapeHtml(value).replace(/`/g, "&#96;");
     }
 
-    init();
+    try {
+      init();
+    } catch (error) {
+      console.error("Dashboard initialization failed", error);
+      document.getElementById("page").innerHTML = '<div class="empty-state">Dashboard failed to initialize. Please refresh the page or clear browser storage.</div>';
+    }
   </script>
 </body>
 </html>
