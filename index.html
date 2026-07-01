@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ALPHA MD / MSO Command Center</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self';">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
   <style>
     :root {
       --navy-950: #07111f;
@@ -3467,7 +3468,7 @@
     function pcpRecommendations(rows) {
       const recs = rows.sort((a, b) => b.acquisitionScore - a.acquisitionScore).slice(0, 5).map(r => {
         const action = r.acquisitionScore >= 80 ? "Prioritize" : r.acquisitionScore >= 65 ? "Watch" : r.acquisitionScore >= 50 ? "Validate" : "Kill";
-        return `${action}: ${r.practiceName} scored ${r.acquisitionScore}, with ${formatPct(r.ebitdaMargin)} EBITDA margin and ${formatPct(r.medicarePct)} Medicare mix.`;
+        return `${escapeHtml(action)}: ${escapeHtml(r.practiceName)} scored ${escapeHtml(r.acquisitionScore)}, with ${formatPct(r.ebitdaMargin)} EBITDA margin and ${formatPct(r.medicarePct)} Medicare mix.`;
       });
       return insightsList(recs);
     }
@@ -3484,7 +3485,7 @@
 
     function trialRecruitmentWatch() {
       const rows = app.data.clinicalTrials.map(enrichTrial).filter(t => t.recruitmentGap > 0).sort((a, b) => b.recruitmentGap - a.recruitmentGap).slice(0, 6);
-      return insightsList(rows.map(t => `${t.protocolName}: ${t.recruitmentGap} patients below enrollment target. Current progress ${Math.round(t.enrollmentProgress)}%.`));
+      return insightsList(rows.map(t => `${escapeHtml(t.protocolName)}: ${escapeHtml(t.recruitmentGap)} patients below enrollment target. Current progress ${Math.round(t.enrollmentProgress)}%.`));
     }
 
     function campaignFunnel(rows) {
@@ -3504,14 +3505,14 @@
       const scale = rows.filter(c => /scale/i.test(c.status) || c.roi > 1).sort((a, b) => b.roi - a.roi).slice(0, 4);
       const stop = rows.filter(c => /stop/i.test(c.status) || c.roi < -0.5).sort((a, b) => a.roi - b.roi).slice(0, 4);
       return insightsList([
-        ...scale.map(c => `Scale: ${c.name} has ROI ${formatPct(c.roi)} and CPL ${shortMoney(c.costPerLead)}.`),
-        ...stop.map(c => `Stop or rebuild: ${c.name} has ROI ${formatPct(c.roi)} and needs action: ${c.nextAction}.`)
+        ...scale.map(c => `Scale: ${escapeHtml(c.name)} has ROI ${formatPct(c.roi)} and CPL ${shortMoney(c.costPerLead)}.`),
+        ...stop.map(c => `Stop or rebuild: ${escapeHtml(c.name)} has ROI ${formatPct(c.roi)} and needs action: ${escapeHtml(c.nextAction)}.`)
       ]);
     }
 
     function msoRecommendations(rows) {
       const top = rows.sort((a, b) => b.enterpriseValue - a.enterpriseValue).slice(0, 5);
-      return insightsList(top.map(c => `${c.name}: annual MSO revenue ${shortMoney(c.annualRevenue)}, margin ${formatPct(c.grossMargin)}, enterprise value ${shortMoney(c.enterpriseValue)}.`));
+      return insightsList(top.map(c => `${escapeHtml(c.name)}: annual MSO revenue ${shortMoney(c.annualRevenue)}, margin ${formatPct(c.grossMargin)}, enterprise value ${shortMoney(c.enterpriseValue)}.`));
     }
 
     function stateHeatmap(states) {
@@ -3526,19 +3527,19 @@
       const top = rows.slice().sort((a, b) => b.combinedScore - a.combinedScore).slice(0, 10);
       const avoid = rows.filter(s => s.cpomRisk === "High" || /paused/i.test(s.status)).slice(0, 5);
       return insightsList([
-        ...top.map(s => `Enter next: ${s.state} scored ${s.combinedScore}. ${s.nextAction}.`),
-        ...avoid.map(s => `Avoid for now: ${s.state} has ${s.cpomRisk} CPOM risk and ${s.licensingComplexity} licensing complexity.`)
+        ...top.map(s => `Enter next: ${escapeHtml(s.state)} scored ${escapeHtml(s.combinedScore)}. ${escapeHtml(s.nextAction)}.`),
+        ...avoid.map(s => `Avoid for now: ${escapeHtml(s.state)} has ${escapeHtml(s.cpomRisk)} CPOM risk and ${escapeHtml(s.licensingComplexity)} licensing complexity.`)
       ]);
     }
 
     function diligenceEscalations(rows) {
       const items = rows.filter(r => /high/i.test(r.riskLevel) || /blocked/i.test(r.status)).slice(0, 8);
-      return insightsList(items.map(r => `${r.item} for ${r.relatedTarget}: ${r.status}, ${r.riskLevel} risk, owner ${r.owner}. ${r.notes}`));
+      return insightsList(items.map(r => `${escapeHtml(r.item)} for ${escapeHtml(r.relatedTarget)}: ${escapeHtml(r.status)}, ${escapeHtml(r.riskLevel)} risk, owner ${escapeHtml(r.owner)}. ${escapeHtml(r.notes)}`));
     }
 
     function integrationRecommendations(rows) {
       const items = rows.filter(r => /high/i.test(r.risk) || r.progress < 25).slice(0, 8);
-      return insightsList(items.map(r => `${r.deal}: ${r.item} is ${r.progress}% complete. Next action: ${r.nextAction}.`));
+      return insightsList(items.map(r => `${escapeHtml(r.deal)}: ${escapeHtml(r.item)} is ${escapeHtml(r.progress)}% complete. Next action: ${escapeHtml(r.nextAction)}.`));
     }
 
     function miniStat(label, value, note) {
