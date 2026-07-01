@@ -1490,6 +1490,7 @@
     }
 
     function executiveMetrics() {
+      const base = executiveMetricsBase();
       const pcpActive = app.data.pcpLeads.filter(l => !/dead/i.test(l.dealStatus)).length;
       const trialActive = app.data.clinicalTrials.filter(t => !/failed|completed/i.test(t.stage)).length;
       const acquisitionTargets = app.data.acquisitionTargets.length;
@@ -1498,23 +1499,22 @@
       const diligence = app.data.pcpLeads.filter(l => /diligence/i.test(l.dealStatus)).length + app.data.diligence.filter(d => !/complete/i.test(d.status)).length;
       const closedDeals = app.data.acquisitionTargets.filter(t => /closed/i.test(t.stage)).length;
       const deadDeals = app.data.pcpLeads.filter(l => /dead|pass/i.test(l.dealStatus)).length;
-      const activeTasks = app.data.tasks.filter(t => !/complete|cancelled/i.test(t.status)).length;
+      const activeTaskCount = activeTasks().length;
       const overdueTasks = app.data.tasks.filter(t => daysOverdue(t.dueDate, t.status) > 0).length;
       const completedThisWeek = app.data.tasks.filter(t => t.completionDate && daysBetween(t.completionDate, todayIso()) <= 7).length;
-      const pcpRevenue = sum(app.data.pcpLeads, "estimatedRevenue") + sum(app.data.startupMarkets, m => startupMarketAnnualRevenue(m));
-      const trialRevenue = sum(app.data.clinicalTrials, "netProjectedRevenue") + sum(app.data.trialSites, "annualRevenue");
-      const msoAnnual = sum(app.data.msoClients, c => msoAnnualRevenue(c));
-      const totalRevenue = pcpRevenue + trialRevenue + msoAnnual;
+      const totalRevenue = base.pcpRevenue + base.trialRevenue + base.msoAnnual;
       const pcpEbitda = sum(app.data.pcpLeads, "estimatedEbitda") + sum(app.data.startupMarkets, m => startupMarketAnnualEbitda(m));
       const trialEbitda = sum(app.data.clinicalTrials, t => t.netProjectedRevenue * t.projectedMargin) + sum(app.data.trialSites, "ebitda");
       const msoEbitda = sum(app.data.msoClients, c => msoAnnualEbitda(c));
       const ebitda = pcpEbitda + trialEbitda + msoEbitda;
       const enterpriseValue = pcpEbitda * 6 + trialEbitda * 7 + msoEbitda * 8;
-      const cashRequired = sum(app.data.pcpLeads, l => l.askingPrice * 0.22) + app.data.startupMarkets.length * 250000 + app.data.trialSites.filter(s => s.acquisitionPrice).reduce((a, s) => a + s.acquisitionPrice * 0.25, 0);
-      const debtRequired = sum(app.data.pcpLeads, l => l.askingPrice * 0.78) + app.data.trialSites.filter(s => s.acquisitionPrice).reduce((a, s) => a + s.acquisitionPrice * 0.75, 0);
+      const trialSiteCash = app.data.trialSites.filter(s => s.acquisitionPrice).reduce((a, s) => a + s.acquisitionPrice * 0.25, 0);
+      const trialSiteDebt = app.data.trialSites.filter(s => s.acquisitionPrice).reduce((a, s) => a + s.acquisitionPrice * 0.75, 0);
+      const cashRequired = base.cashRequired + trialSiteCash;
+      const debtRequired = base.debtRequired + trialSiteDebt;
       const roi = cashRequired > 0 ? (enterpriseValue - cashRequired) / cashRequired : 0;
       const fiveYearValue = enterpriseValue * Math.pow(1.12, 5);
-      return { pcpActive, trialActive, acquisitionTargets, startupMarkets, signedLois, diligence, closedDeals, deadDeals, activeTasks, overdueTasks, completedThisWeek, pcpRevenue, trialRevenue, msoAnnual, totalRevenue, ebitda, enterpriseValue, cashRequired, debtRequired, roi, fiveYearValue };
+      return { pcpActive, trialActive, acquisitionTargets, startupMarkets, signedLois, diligence, closedDeals, deadDeals, activeTasks: activeTaskCount, overdueTasks, completedThisWeek, pcpRevenue: base.pcpRevenue, trialRevenue: base.trialRevenue, msoAnnual: base.msoAnnual, totalRevenue, ebitda, enterpriseValue, cashRequired, debtRequired, roi, fiveYearValue };
     }
 
     function renderOverview() {
@@ -1585,9 +1585,9 @@
       renderChart("overviewForecastChart", "line", {
         labels: series.labels,
         datasets: [
-          { label: "PCP revenue", data: series.pcpRevenue, borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,.12)", tension: .35, fill: true },
-          { label: "Trials revenue", data: series.trialRevenue, borderColor: "#7c3aed", backgroundColor: "rgba(124,58,237,.1)", tension: .35, fill: true },
-          { label: "MSO revenue", data: series.msoRevenue, borderColor: "#059669", backgroundColor: "rgba(5,150,105,.1)", tension: .35, fill: true }
+          areaDataset("PCP revenue", series.pcpRevenue, "#2563eb", ".12"),
+          areaDataset("Trials revenue", series.trialRevenue, "#7c3aed", ".1"),
+          areaDataset("MSO revenue", series.msoRevenue, "#059669", ".1")
         ]
       }, moneyChartOptions());
 
@@ -1602,7 +1602,7 @@
         ]
       }, stackedChartOptions());
 
-      const workload = countBy(app.data.tasks.filter(t => !/complete|cancelled/i.test(t.status)), "owner");
+      const workload = countBy(activeTasks(), "owner");
       renderChart("ownerWorkloadChart", "doughnut", {
         labels: Object.keys(workload),
         datasets: [{ data: Object.values(workload), backgroundColor: ["#2563eb", "#7c3aed", "#059669", "#d97706", "#dc2626", "#0891b2"] }]
@@ -1618,7 +1618,7 @@
         "Operational work queue with urgency scoring, ROI scoring, blockers, owner workload, revenue creation, and risk reduction views.",
         `
           ${kpiGrid([
-            ["Active Tasks", app.data.tasks.filter(t => !/complete|cancelled/i.test(t.status)).length, "pipeline", "Not started, waiting, blocked, or in progress", "num"],
+            ["Active Tasks", activeTasks().length, "pipeline", "Not started, waiting, blocked, or in progress", "num"],
             ["Overdue Tasks", overdue.length, overdue.length ? "urgent" : "growth", "Past due and not complete", "num"],
             ["Blocked Tasks", blocked.length, blocked.length ? "warning" : "growth", "Needs unblock decision", "num"],
             ["Financial Impact", sum(rows, "financialImpact"), "growth", "Estimated value touched by visible tasks", "money"]
@@ -2309,16 +2309,16 @@
       renderChart("forecastRevenueChart", "line", {
         labels: series.labels,
         datasets: [
-          { label: "PCP", data: series.pcpRevenue, borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,.08)", fill: true, tension: .35 },
-          { label: "Clinical trials", data: series.trialRevenue, borderColor: "#7c3aed", backgroundColor: "rgba(124,58,237,.08)", fill: true, tension: .35 },
-          { label: "MSO", data: series.msoRevenue, borderColor: "#059669", backgroundColor: "rgba(5,150,105,.08)", fill: true, tension: .35 }
+          areaDataset("PCP", series.pcpRevenue, "#2563eb"),
+          areaDataset("Clinical trials", series.trialRevenue, "#7c3aed"),
+          areaDataset("MSO", series.msoRevenue, "#059669")
         ]
       }, moneyChartOptions());
       renderChart("forecastValueChart", "line", {
         labels: series.labels,
         datasets: [
-          { label: "EBITDA", data: series.ebitda, borderColor: "#059669", tension: .35 },
-          { label: "Enterprise value", data: series.enterpriseValue, borderColor: "#d97706", tension: .35 }
+          lineDataset("EBITDA", series.ebitda, "#059669"),
+          lineDataset("Enterprise value", series.enterpriseValue, "#d97706")
         ]
       }, moneyChartOptions());
       renderSimpleTable("forecastTable", series.labels.map((year, i) => ({
@@ -2532,7 +2532,7 @@
     }
 
     function insightsBox() {
-      return `<ul class="insights">${computeInsights().map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>`;
+      return insightsList(computeInsights().map(i => escapeHtml(i)));
     }
 
     function computeInsights() {
@@ -2549,8 +2549,8 @@
       if (campaign) insights.push(`${campaign.name} has the lowest cost per lead at ${shortMoney(campaign.costPerLead)}. Consider scaling budget by 25% if lead quality holds.`);
       const sponsorConcentration = sponsorConcentrationRisk();
       if (sponsorConcentration) insights.push(sponsorConcentration);
-      const priyaOpen = app.data.tasks.filter(t => t.owner === "Priya" && !/complete|cancelled/i.test(t.status)).length;
-      const raghavOpen = app.data.tasks.filter(t => t.owner === "Raghav" && !/complete|cancelled/i.test(t.status)).length;
+      const priyaOpen = ownerActiveTasks("Priya").length;
+      const raghavOpen = ownerActiveTasks("Raghav").length;
       insights.push(`Priya has ${priyaOpen} open tasks; Raghav has ${raghavOpen} open tasks. Rebalance if one owner is above capacity.`);
       const msoMargin = average(app.data.msoClients.map(enrichMso), "grossMargin");
       if (msoMargin > 0.5) insights.push(`MSO recurring revenue is high-margin at ${formatPct(msoMargin)} average gross margin. Prioritize service contracts alongside acquisitions.`);
@@ -2798,7 +2798,7 @@
     function snapshotSummary() {
       const snapshots = getSnapshots();
       if (!snapshots.length) return `<div class="empty-state">No snapshots saved yet.</div>`;
-      return `<ul class="insights">${snapshots.slice(-5).reverse().map(s => `<li>${new Date(s.createdAt).toLocaleString()} | Revenue ${shortMoney(s.metrics.totalRevenue)} | EBITDA ${shortMoney(s.metrics.ebitda)} | EV ${shortMoney(s.metrics.enterpriseValue)}</li>`).join("")}</ul>`;
+      return insightsList(snapshots.slice(-5).reverse().map(s => `${new Date(s.createdAt).toLocaleString()} | Revenue ${shortMoney(s.metrics.totalRevenue)} | EBITDA ${shortMoney(s.metrics.ebitda)} | EV ${shortMoney(s.metrics.enterpriseValue)}`));
     }
 
     function getSnapshots() {
@@ -2919,56 +2919,46 @@
       button.classList.add("active");
     }
 
+    const pcpScenarioCases = {
+      "Conservative": { pcpNewPatients: 55, pcpCollection: 140, pcpAncillaryAdoption: 18, pcpCollectionRate: 52 },
+      "Base case": { pcpProviders: 2, pcpNewPatients: 90, pcpCollection: 155, pcpVisits: 3.2, pcpRent: 9500, pcpStaff: 28000, pcpMarketing: 18000, pcpAncillaryAdoption: 28, pcpCollectionRate: 58 },
+      "Aggressive": { pcpNewPatients: 140, pcpCollection: 170, pcpAncillaryAdoption: 36, pcpCollectionRate: 62 },
+      "Medicare-heavy": { pcpVisits: 3.6, pcpCollection: 150, pcpCollectionRate: 57 },
+      "Commercial-heavy": { pcpVisits: 2.6, pcpCollection: 185, pcpCollectionRate: 64 },
+      "Ancillary-light": { pcpAncillaryAdoption: 10 },
+      "Ancillary-heavy": { pcpAncillaryAdoption: 48 },
+      "One provider": { pcpProviders: 1, pcpStaff: 21000 },
+      "Two providers": { pcpProviders: 2, pcpStaff: 28000 },
+      "Three providers": { pcpProviders: 3, pcpStaff: 39000 },
+      "Fast ramp": { pcpNewPatients: 125, pcpMarketing: 24000 },
+      "Slow ramp": { pcpNewPatients: 55, pcpMarketing: 9000 }
+    };
+
     function applyPcpScenario(name, button) {
-      setActiveChip(button);
-      const changes = {
-        "Conservative": { pcpNewPatients: 55, pcpCollection: 140, pcpAncillaryAdoption: 18, pcpCollectionRate: 52 },
-        "Base case": { pcpProviders: 2, pcpNewPatients: 90, pcpCollection: 155, pcpVisits: 3.2, pcpRent: 9500, pcpStaff: 28000, pcpMarketing: 18000, pcpAncillaryAdoption: 28, pcpCollectionRate: 58 },
-        "Aggressive": { pcpNewPatients: 140, pcpCollection: 170, pcpAncillaryAdoption: 36, pcpCollectionRate: 62 },
-        "Medicare-heavy": { pcpVisits: 3.6, pcpCollection: 150, pcpCollectionRate: 57 },
-        "Commercial-heavy": { pcpVisits: 2.6, pcpCollection: 185, pcpCollectionRate: 64 },
-        "Ancillary-light": { pcpAncillaryAdoption: 10 },
-        "Ancillary-heavy": { pcpAncillaryAdoption: 48 },
-        "One provider": { pcpProviders: 1, pcpStaff: 21000 },
-        "Two providers": { pcpProviders: 2, pcpStaff: 28000 },
-        "Three providers": { pcpProviders: 3, pcpStaff: 39000 },
-        "Fast ramp": { pcpNewPatients: 125, pcpMarketing: 24000 },
-        "Slow ramp": { pcpNewPatients: 55, pcpMarketing: 9000 }
-      }[name] || {};
-      setInputs(changes);
-      updatePcpStartupCalc();
+      applyScenario(pcpScenarioCases, updatePcpStartupCalc, name, button);
     }
 
     function updatePcpStartupCalc() {
       const v = getInputs(["pcpProviders", "pcpNewPatients", "pcpCollection", "pcpVisits", "pcpRent", "pcpStaff", "pcpMarketing", "pcpAncillaryAdoption", "pcpCollectionRate"]);
       const projection = buildPcpStartupProjection(v);
-      const breakeven = projection.find(p => p.ebitda > 0)?.month || "After month 36";
+      const breakeven = projectionBreakeven(projection);
       const minCash = Math.min(...projection.map(p => p.cumulativeCash));
       const year1Revenue = sum(projection.slice(0, 12), "revenue");
       const year3Revenue = sum(projection, "revenue");
       const year5Revenue = year3Revenue * 1.8;
       const year5Ebitda = sum(projection.slice(-12), "ebitda") * 1.8;
       const ev6 = year5Ebitda * 6;
-      document.getElementById("pcpStartupOutputs").innerHTML = `
-        <div class="action-panel">
-          ${miniStat("Monthly Revenue", shortMoney(projection[11].revenue), "Month 12 run-rate")}
-          ${miniStat("Monthly EBITDA", shortMoney(projection[11].ebitda), "Month 12 profitability")}
-          ${miniStat("Break-even Month", breakeven, "First positive EBITDA month")}
-          ${miniStat("Cash Burn Before Break-even", shortMoney(Math.abs(minCash)), "Maximum negative cash")}
-          ${miniStat("12-Month Revenue", shortMoney(year1Revenue), "Year 1 revenue")}
-          ${miniStat("36-Month Revenue", shortMoney(year3Revenue), "First 36 months")}
-          ${miniStat("5-Year EBITDA", shortMoney(year5Ebitda), "Run-rate growth case")}
-          ${miniStat("Enterprise Value at 6x", shortMoney(ev6), `Priya ${shortMoney(ev6 * .5)} | Raghav ${shortMoney(ev6 * .5)}`)}
-        </div>
-      `;
-      renderChart("pcpStartupChart", "line", {
-        labels: projection.map(p => "M" + p.month),
-        datasets: [
-          { label: "Revenue", data: projection.map(p => p.revenue), borderColor: "#2563eb", tension: .35 },
-          { label: "EBITDA", data: projection.map(p => p.ebitda), borderColor: "#059669", tension: .35 },
-          { label: "Cumulative cash", data: projection.map(p => p.cumulativeCash), borderColor: "#dc2626", tension: .35 }
-        ]
-      }, moneyChartOptions());
+      document.getElementById("pcpStartupOutputs").innerHTML = miniStatGrid([
+        ["Monthly Revenue", shortMoney(projection[11].revenue), "Month 12 run-rate"],
+        ["Monthly EBITDA", shortMoney(projection[11].ebitda), "Month 12 profitability"],
+        ["Break-even Month", breakeven, "First positive EBITDA month"],
+        ["Cash Burn Before Break-even", shortMoney(Math.abs(minCash)), "Maximum negative cash"],
+        ["12-Month Revenue", shortMoney(year1Revenue), "Year 1 revenue"],
+        ["36-Month Revenue", shortMoney(year3Revenue), "First 36 months"],
+        ["5-Year EBITDA", shortMoney(year5Ebitda), "Run-rate growth case"],
+        ["Enterprise Value at 6x", shortMoney(ev6), ownerValueSplit(ev6)]
+      ]);
+      projectionLineChart("pcpStartupChart", projection, "month", "revenue", "ebitda", "cumulativeCash");
     }
 
     function buildPcpStartupProjection(v) {
@@ -2989,23 +2979,22 @@
       return projection;
     }
 
+    const trialScenarioCases = {
+      "Slow recruitment": { trialPatients: 8, trialMarketing: 26000 },
+      "Base recruitment": { trialStudies: 8, trialPatients: 15, trialRevPatient: 8000, trialMargin: 25 },
+      "Fast recruitment": { trialPatients: 26, trialMarketing: 24000 },
+      "Low study volume": { trialStudies: 4 },
+      "Medium study volume": { trialStudies: 8 },
+      "High study volume": { trialStudies: 16 },
+      "Strong CRO network": { trialCroStrength: 9, trialStudies: 14 },
+      "Weak CRO network": { trialCroStrength: 3, trialStudies: 4 },
+      "PCP referral engine enabled": { trialPatients: 22, trialMarketing: 12000 },
+      "Digital ads enabled": { trialMarketing: 30000, trialPatients: 19 },
+      "Community outreach enabled": { trialMarketing: 21000, trialPatients: 18 }
+    };
+
     function applyTrialScenario(name, button) {
-      setActiveChip(button);
-      const changes = {
-        "Slow recruitment": { trialPatients: 8, trialMarketing: 26000 },
-        "Base recruitment": { trialStudies: 8, trialPatients: 15, trialRevPatient: 8000, trialMargin: 25 },
-        "Fast recruitment": { trialPatients: 26, trialMarketing: 24000 },
-        "Low study volume": { trialStudies: 4 },
-        "Medium study volume": { trialStudies: 8 },
-        "High study volume": { trialStudies: 16 },
-        "Strong CRO network": { trialCroStrength: 9, trialStudies: 14 },
-        "Weak CRO network": { trialCroStrength: 3, trialStudies: 4 },
-        "PCP referral engine enabled": { trialPatients: 22, trialMarketing: 12000 },
-        "Digital ads enabled": { trialMarketing: 30000, trialPatients: 19 },
-        "Community outreach enabled": { trialMarketing: 21000, trialPatients: 18 }
-      }[name] || {};
-      setInputs(changes);
-      updateTrialSimCalc();
+      applyScenario(trialScenarioCases, updateTrialSimCalc, name, button);
     }
 
     function updateTrialSimCalc() {
@@ -3024,28 +3013,19 @@
       const annualRevenue = sum(projection.slice(12), "revenue");
       const annualEbitda = sum(projection.slice(12), "ebitda");
       const ev = annualEbitda * 7;
-      const burn = Math.abs(Math.min(...projection.map(p => p.cumulative)));
-      const breakeven = projection.find(p => p.ebitda > 0)?.month || "After month 24";
-      document.getElementById("trialSimOutputs").innerHTML = `
-        <div class="action-panel">
-          ${miniStat("Monthly Revenue", shortMoney(projection[11].revenue), "Month 12 run-rate")}
-          ${miniStat("Monthly EBITDA", shortMoney(projection[11].ebitda), "Month 12 run-rate")}
-          ${miniStat("Cash Burn", shortMoney(burn), "Before break-even")}
-          ${miniStat("Break-even Month", breakeven, "First positive EBITDA month")}
-          ${miniStat("Annual Revenue", shortMoney(annualRevenue), "Year 2 run-rate")}
-          ${miniStat("Annual EBITDA", shortMoney(annualEbitda), "Year 2 run-rate")}
-          ${miniStat("Enterprise Value", shortMoney(ev), "7x EBITDA case")}
-          ${miniStat("Owner Value", `${shortMoney(ev * .5)} each`, "Priya 50% | Raghav 50%")}
-        </div>
-      `;
-      renderChart("trialSimChart", "line", {
-        labels: projection.map(p => "M" + p.month),
-        datasets: [
-          { label: "Revenue", data: projection.map(p => p.revenue), borderColor: "#7c3aed", tension: .35 },
-          { label: "EBITDA", data: projection.map(p => p.ebitda), borderColor: "#059669", tension: .35 },
-          { label: "Cumulative cash", data: projection.map(p => p.cumulative), borderColor: "#dc2626", tension: .35 }
-        ]
-      }, moneyChartOptions());
+      const burn = projectionMaxBurn(projection);
+      const breakeven = projectionBreakeven(projection);
+      document.getElementById("trialSimOutputs").innerHTML = miniStatGrid([
+        ["Monthly Revenue", shortMoney(projection[11].revenue), "Month 12 run-rate"],
+        ["Monthly EBITDA", shortMoney(projection[11].ebitda), "Month 12 run-rate"],
+        ["Cash Burn", shortMoney(burn), "Before break-even"],
+        ["Break-even Month", breakeven, "First positive EBITDA month"],
+        ["Annual Revenue", shortMoney(annualRevenue), "Year 2 run-rate"],
+        ["Annual EBITDA", shortMoney(annualEbitda), "Year 2 run-rate"],
+        ["Enterprise Value", shortMoney(ev), "7x EBITDA case"],
+        ["Owner Value", `${shortMoney(ev * .5)} each`, ownerValueSplit(ev)]
+      ]);
+      projectionLineChart("trialSimChart", projection, "month", "revenue", "ebitda", "cumulative", "#7c3aed");
     }
 
     function loadAcqTarget() {
@@ -3082,18 +3062,16 @@
       const valueCreated = exitValue - cashAtClose;
       const margin = y1Ebitda / y1Revenue;
       const recommendation = dealRecommendation(dscr, payback, margin, v.acqStrategicFit, v.acqEbitda);
-      document.getElementById("acqOutputs").innerHTML = `
-        <div class="action-panel">
-          ${miniStat("Recommendation", recommendation, `DSCR ${dscr.toFixed(2)}x | Payback ${payback.toFixed(0)} mo`)}
-          ${miniStat("Monthly Debt Payment", shortMoney(monthlyPayment), "Amortized term debt")}
-          ${miniStat("Annual Debt Service", shortMoney(annualDebtService), "Debt burden")}
-          ${miniStat("Cash Required at Close", shortMoney(cashAtClose), "Down payment, closing, integration")}
-          ${miniStat("Year 1 EBITDA", shortMoney(y1Ebitda), `Margin ${formatPct(margin)}`)}
-          ${miniStat("Year 5 EBITDA", shortMoney(y5Ebitda), "Growth and optimization")}
-          ${miniStat("Equity Value at Exit", shortMoney(exitValue), "6x EBITDA case")}
-          ${miniStat("Total Value Created", shortMoney(valueCreated), `Priya ${shortMoney(valueCreated * .5)} | Raghav ${shortMoney(valueCreated * .5)}`)}
-        </div>
-      `;
+      document.getElementById("acqOutputs").innerHTML = miniStatGrid([
+        ["Recommendation", recommendation, `DSCR ${dscr.toFixed(2)}x | Payback ${payback.toFixed(0)} mo`],
+        ["Monthly Debt Payment", shortMoney(monthlyPayment), "Amortized term debt"],
+        ["Annual Debt Service", shortMoney(annualDebtService), "Debt burden"],
+        ["Cash Required at Close", shortMoney(cashAtClose), "Down payment, closing, integration"],
+        ["Year 1 EBITDA", shortMoney(y1Ebitda), `Margin ${formatPct(margin)}`],
+        ["Year 5 EBITDA", shortMoney(y5Ebitda), "Growth and optimization"],
+        ["Equity Value at Exit", shortMoney(exitValue), "6x EBITDA case"],
+        ["Total Value Created", shortMoney(valueCreated), ownerValueSplit(valueCreated)]
+      ]);
       renderSensitivity(v, y1Ebitda);
       renderChart("acqBridgeChart", "bar", {
         labels: ["Base EBITDA", "Cost savings", "Ancillary margin", "Year 1 EBITDA"],
@@ -3130,30 +3108,20 @@
         cumulative += ebitda;
         rows.push({ month, revenue, expenses, ebitda, cumulative });
       }
-      const breakeven = rows.find(r => r.ebitda > 0)?.month || "After month 36";
-      const maxNegative = Math.abs(Math.min(...rows.map(r => r.cumulative)));
+      const breakeven = projectionBreakeven(rows);
+      const maxNegative = projectionMaxBurn(rows);
       const y5Value = sum(rows.slice(-12), "ebitda") * 1.8 * 6;
       const y10Value = y5Value * 2.6;
-      document.getElementById("startupOutputs").innerHTML = `
-        <div class="action-panel">
-          ${miniStat("Break-even Point", breakeven, "First positive EBITDA month")}
-          ${miniStat("Max Negative Cash", shortMoney(maxNegative), "Funding requirement proxy")}
-          ${miniStat("Funding Required", shortMoney(maxNegative * 1.15), "With 15% cushion")}
-          ${miniStat("5-Year Value", shortMoney(y5Value), "6x EBITDA")}
-          ${miniStat("10-Year Value", shortMoney(y10Value), "Platform compounding")}
-          ${miniStat("Priya Value", shortMoney(y10Value * .5), "50% ownership")}
-          ${miniStat("Raghav Value", shortMoney(y10Value * .5), "50% ownership")}
-          ${miniStat("Month 36 EBITDA", shortMoney(rows[35].ebitda), "Run-rate month")}
-        </div>
-      `;
-      renderChart("startupChart", "line", {
-        labels: rows.map(r => "M" + r.month),
-        datasets: [
-          { label: "Revenue", data: rows.map(r => r.revenue), borderColor: "#2563eb", tension: .35 },
-          { label: "EBITDA", data: rows.map(r => r.ebitda), borderColor: "#059669", tension: .35 },
-          { label: "Cumulative cash", data: rows.map(r => r.cumulative), borderColor: "#dc2626", tension: .35 }
-        ]
-      }, moneyChartOptions());
+      document.getElementById("startupOutputs").innerHTML = miniStatGrid([
+        ["Break-even Point", breakeven, "First positive EBITDA month"],
+        ["Max Negative Cash", shortMoney(maxNegative), "Funding requirement proxy"],
+        ["Funding Required", shortMoney(maxNegative * 1.15), "With 15% cushion"],
+        ["5-Year Value", shortMoney(y5Value), "6x EBITDA"],
+        ["10-Year Value", shortMoney(y10Value), "Platform compounding"],
+        ["Owner Value (50% each)", shortMoney(y10Value * .5) + " each", ownerValueSplit(y10Value)],
+        ["Month 36 EBITDA", shortMoney(rows[35].ebitda), "Run-rate month"]
+      ]);
+      projectionLineChart("startupChart", rows, "month", "revenue", "ebitda", "cumulative");
       renderSimpleTable("startupProjectionTable", rows, [
         { key: "month", label: "Month" },
         { key: "revenue", label: "Revenue", type: "money" },
@@ -3163,22 +3131,21 @@
       ]);
     }
 
+    const growthScenarioCases = {
+      "Tiny but profitable": { simPcpAcquired: 1, simPcpStarted: 1, simTrialAcquired: 0, simTrialStarted: 1, simMarketing: 120000, simStaffing: 350000, simDebtRate: 8, simValuation: 6 },
+      "Washington only": { simPcpAcquired: 5, simPcpStarted: 3, simTrialAcquired: 1, simTrialStarted: 2, simMarketing: 450000, simStaffing: 900000, simValuation: 7 },
+      "Pacific Northwest platform": { simPcpAcquired: 12, simPcpStarted: 8, simTrialAcquired: 3, simTrialStarted: 4, simMarketing: 950000, simStaffing: 2200000, simValuation: 8 },
+      "10-state expansion": { simPcpAcquired: 35, simPcpStarted: 22, simTrialAcquired: 8, simTrialStarted: 10, simMarketing: 2400000, simStaffing: 6200000, simValuation: 9 },
+      "50-state roll-up": { simPcpAcquired: 75, simPcpStarted: 60, simTrialAcquired: 24, simTrialStarted: 30, simMarketing: 2500000, simStaffing: 12000000, simValuation: 11 },
+      "Clinical trials-first": { simPcpAcquired: 3, simPcpStarted: 2, simTrialAcquired: 10, simTrialStarted: 12, simTrialMargin: 31, simValuation: 9 },
+      "PCP-first": { simPcpAcquired: 20, simPcpStarted: 12, simTrialAcquired: 1, simTrialStarted: 2, simPcpMargin: 22, simValuation: 7 },
+      "Balanced MSO platform": { simPcpAcquired: 14, simPcpStarted: 10, simTrialAcquired: 5, simTrialStarted: 7, simMsoFee: 8, simValuation: 8.5 },
+      "Conservative debt-light": { simPcpAcquired: 4, simPcpStarted: 5, simTrialAcquired: 1, simTrialStarted: 2, simDebtRate: 7, simMarketing: 300000, simValuation: 6.5 },
+      "Aggressive acquisition roll-up": { simPcpAcquired: 50, simPcpStarted: 8, simTrialAcquired: 18, simTrialStarted: 5, simDebtRate: 10, simValuation: 10 }
+    };
+
     function applyGrowthScenario(name, button) {
-      setActiveChip(button);
-      const cases = {
-        "Tiny but profitable": { simPcpAcquired: 1, simPcpStarted: 1, simTrialAcquired: 0, simTrialStarted: 1, simMarketing: 120000, simStaffing: 350000, simDebtRate: 8, simValuation: 6 },
-        "Washington only": { simPcpAcquired: 5, simPcpStarted: 3, simTrialAcquired: 1, simTrialStarted: 2, simMarketing: 450000, simStaffing: 900000, simValuation: 7 },
-        "Pacific Northwest platform": { simPcpAcquired: 12, simPcpStarted: 8, simTrialAcquired: 3, simTrialStarted: 4, simMarketing: 950000, simStaffing: 2200000, simValuation: 8 },
-        "10-state expansion": { simPcpAcquired: 35, simPcpStarted: 22, simTrialAcquired: 8, simTrialStarted: 10, simMarketing: 2400000, simStaffing: 6200000, simValuation: 9 },
-        "50-state roll-up": { simPcpAcquired: 75, simPcpStarted: 60, simTrialAcquired: 24, simTrialStarted: 30, simMarketing: 2500000, simStaffing: 12000000, simValuation: 11 },
-        "Clinical trials-first": { simPcpAcquired: 3, simPcpStarted: 2, simTrialAcquired: 10, simTrialStarted: 12, simTrialMargin: 31, simValuation: 9 },
-        "PCP-first": { simPcpAcquired: 20, simPcpStarted: 12, simTrialAcquired: 1, simTrialStarted: 2, simPcpMargin: 22, simValuation: 7 },
-        "Balanced MSO platform": { simPcpAcquired: 14, simPcpStarted: 10, simTrialAcquired: 5, simTrialStarted: 7, simMsoFee: 8, simValuation: 8.5 },
-        "Conservative debt-light": { simPcpAcquired: 4, simPcpStarted: 5, simTrialAcquired: 1, simTrialStarted: 2, simDebtRate: 7, simMarketing: 300000, simValuation: 6.5 },
-        "Aggressive acquisition roll-up": { simPcpAcquired: 50, simPcpStarted: 8, simTrialAcquired: 18, simTrialStarted: 5, simDebtRate: 10, simValuation: 10 }
-      };
-      setInputs(cases[name] || {});
-      updateGrowthScenario();
+      applyScenario(growthScenarioCases, updateGrowthScenario, name, button);
     }
 
     function updateGrowthScenario() {
@@ -3196,18 +3163,16 @@
       const monthlyBurn = Math.max(0, (v.simMarketing + v.simStaffing) / 12 - Math.max(0, ebitda / 12));
       const fiveYearValue = ev * Math.pow(1 + v.simGrowth / 100, 5);
       const tenYearValue = ev * Math.pow(1 + v.simGrowth / 100, 10);
-      document.getElementById("growthOutputs").innerHTML = `
-        <div class="action-panel">
-          ${miniStat("Total Revenue", shortMoney(totalRevenue), "Year 1 scenario")}
-          ${miniStat("Total EBITDA", shortMoney(ebitda), "After staffing and marketing")}
-          ${miniStat("Enterprise Value", shortMoney(ev), `${v.simValuation}x EBITDA`)}
-          ${miniStat("Cash Needed", shortMoney(cashNeeded), "Startup and acquisition equity")}
-          ${miniStat("Debt Needed", shortMoney(debtNeeded), `${v.simDebtRate}% rate assumption`)}
-          ${miniStat("Monthly Burn", shortMoney(monthlyBurn), "Before mature profitability")}
-          ${miniStat("5-Year Owner Value", shortMoney(fiveYearValue), `Priya ${shortMoney(fiveYearValue * .5)} | Raghav ${shortMoney(fiveYearValue * .5)}`)}
-          ${miniStat("10-Year Owner Value", shortMoney(tenYearValue), `Priya ${shortMoney(tenYearValue * .5)} | Raghav ${shortMoney(tenYearValue * .5)}`)}
-        </div>
-      `;
+      document.getElementById("growthOutputs").innerHTML = miniStatGrid([
+        ["Total Revenue", shortMoney(totalRevenue), "Year 1 scenario"],
+        ["Total EBITDA", shortMoney(ebitda), "After staffing and marketing"],
+        ["Enterprise Value", shortMoney(ev), `${v.simValuation}x EBITDA`],
+        ["Cash Needed", shortMoney(cashNeeded), "Startup and acquisition equity"],
+        ["Debt Needed", shortMoney(debtNeeded), `${v.simDebtRate}% rate assumption`],
+        ["Monthly Burn", shortMoney(monthlyBurn), "Before mature profitability"],
+        ["5-Year Owner Value", shortMoney(fiveYearValue), ownerValueSplit(fiveYearValue)],
+        ["10-Year Owner Value", shortMoney(tenYearValue), ownerValueSplit(tenYearValue)]
+      ]);
       renderChart("growthChart", "bar", {
         labels: ["PCP EBITDA", "Trials EBITDA", "MSO EBITDA", "Staffing", "Marketing", "Enterprise Value"],
         datasets: [{ label: "Value bridge", data: [pcpRevenue * (v.simPcpMargin / 100), trialRevenue * (v.simTrialMargin / 100), msoRevenue * .6, -v.simStaffing, -v.simMarketing, ev], backgroundColor: ["#2563eb", "#7c3aed", "#059669", "#dc2626", "#d97706", "#0f172a"] }]
@@ -3233,8 +3198,7 @@
         `- Projected annual revenue: ${shortMoney(m.totalRevenue)}`,
         `- Projected EBITDA: ${shortMoney(m.ebitda)}`,
         `- Projected enterprise value: ${shortMoney(m.enterpriseValue)}`,
-        `- Priya 50% equity value: ${shortMoney(m.enterpriseValue * .5)}`,
-        `- Raghav 50% equity value: ${shortMoney(m.enterpriseValue * .5)}`,
+        `- ${ownerValueSplit(m.enterpriseValue)}`,
         ``,
         `Wins`,
         `- ${bestCampaigns[0]?.name || "Campaign data pending"} is the best current campaign by ROI.`,
@@ -3261,10 +3225,10 @@
         `- Decide first expansion sequence after Washington: Idaho, Arizona, Oregon, or Texas.`,
         ``,
         `Priya Action Items`,
-        ...app.data.tasks.filter(t => t.owner === "Priya" && !/complete|cancelled/i.test(t.status)).slice(0, 5).map(t => `- ${t.name}: ${t.nextAction}`),
+        ...ownerActiveTasks("Priya").slice(0, 5).map(t => `- ${t.name}: ${t.nextAction}`),
         ``,
         `Raghav Action Items`,
-        ...app.data.tasks.filter(t => t.owner === "Raghav" && !/complete|cancelled/i.test(t.status)).slice(0, 5).map(t => `- ${t.name}: ${t.nextAction}`),
+        ...ownerActiveTasks("Raghav").slice(0, 5).map(t => `- ${t.name}: ${t.nextAction}`),
         ``,
         `Methodology`,
         `- Prototype uses embedded demo data and localStorage, not live CRM, EMR, CTMS, billing, payroll, or accounting feeds yet.`
@@ -3294,7 +3258,7 @@
     }
 
     function rankedTasks() {
-      return [...app.data.tasks].filter(t => !/complete|cancelled/i.test(t.status)).sort((a, b) => taskPriorityScore(b) - taskPriorityScore(a));
+      return [...activeTasks()].sort((a, b) => taskPriorityScore(b) - taskPriorityScore(a));
     }
 
     function taskPriorityScore(t) {
@@ -3503,9 +3467,9 @@
     function pcpRecommendations(rows) {
       const recs = rows.sort((a, b) => b.acquisitionScore - a.acquisitionScore).slice(0, 5).map(r => {
         const action = r.acquisitionScore >= 80 ? "Prioritize" : r.acquisitionScore >= 65 ? "Watch" : r.acquisitionScore >= 50 ? "Validate" : "Kill";
-        return `<li>${action}: ${r.practiceName} scored ${r.acquisitionScore}, with ${formatPct(r.ebitdaMargin)} EBITDA margin and ${formatPct(r.medicarePct)} Medicare mix.</li>`;
+        return `${action}: ${r.practiceName} scored ${r.acquisitionScore}, with ${formatPct(r.ebitdaMargin)} EBITDA margin and ${formatPct(r.medicarePct)} Medicare mix.`;
       });
-      return `<ul class="insights">${recs.join("")}</ul>`;
+      return insightsList(recs);
     }
 
     function startupMarketKpis() {
@@ -3520,7 +3484,7 @@
 
     function trialRecruitmentWatch() {
       const rows = app.data.clinicalTrials.map(enrichTrial).filter(t => t.recruitmentGap > 0).sort((a, b) => b.recruitmentGap - a.recruitmentGap).slice(0, 6);
-      return `<ul class="insights">${rows.map(t => `<li>${t.protocolName}: ${t.recruitmentGap} patients below enrollment target. Current progress ${Math.round(t.enrollmentProgress)}%.</li>`).join("")}</ul>`;
+      return insightsList(rows.map(t => `${t.protocolName}: ${t.recruitmentGap} patients below enrollment target. Current progress ${Math.round(t.enrollmentProgress)}%.`));
     }
 
     function campaignFunnel(rows) {
@@ -3539,15 +3503,15 @@
     function campaignRecommendations(rows) {
       const scale = rows.filter(c => /scale/i.test(c.status) || c.roi > 1).sort((a, b) => b.roi - a.roi).slice(0, 4);
       const stop = rows.filter(c => /stop/i.test(c.status) || c.roi < -0.5).sort((a, b) => a.roi - b.roi).slice(0, 4);
-      return `<ul class="insights">
-        ${scale.map(c => `<li>Scale: ${c.name} has ROI ${formatPct(c.roi)} and CPL ${shortMoney(c.costPerLead)}.</li>`).join("")}
-        ${stop.map(c => `<li>Stop or rebuild: ${c.name} has ROI ${formatPct(c.roi)} and needs action: ${c.nextAction}.</li>`).join("")}
-      </ul>`;
+      return insightsList([
+        ...scale.map(c => `Scale: ${c.name} has ROI ${formatPct(c.roi)} and CPL ${shortMoney(c.costPerLead)}.`),
+        ...stop.map(c => `Stop or rebuild: ${c.name} has ROI ${formatPct(c.roi)} and needs action: ${c.nextAction}.`)
+      ]);
     }
 
     function msoRecommendations(rows) {
       const top = rows.sort((a, b) => b.enterpriseValue - a.enterpriseValue).slice(0, 5);
-      return `<ul class="insights">${top.map(c => `<li>${c.name}: annual MSO revenue ${shortMoney(c.annualRevenue)}, margin ${formatPct(c.grossMargin)}, enterprise value ${shortMoney(c.enterpriseValue)}.</li>`).join("")}</ul>`;
+      return insightsList(top.map(c => `${c.name}: annual MSO revenue ${shortMoney(c.annualRevenue)}, margin ${formatPct(c.grossMargin)}, enterprise value ${shortMoney(c.enterpriseValue)}.`));
     }
 
     function stateHeatmap(states) {
@@ -3561,20 +3525,20 @@
     function stateRecommendations(rows) {
       const top = rows.slice().sort((a, b) => b.combinedScore - a.combinedScore).slice(0, 10);
       const avoid = rows.filter(s => s.cpomRisk === "High" || /paused/i.test(s.status)).slice(0, 5);
-      return `<ul class="insights">
-        ${top.map(s => `<li>Enter next: ${s.state} scored ${s.combinedScore}. ${s.nextAction}.</li>`).join("")}
-        ${avoid.map(s => `<li>Avoid for now: ${s.state} has ${s.cpomRisk} CPOM risk and ${s.licensingComplexity} licensing complexity.</li>`).join("")}
-      </ul>`;
+      return insightsList([
+        ...top.map(s => `Enter next: ${s.state} scored ${s.combinedScore}. ${s.nextAction}.`),
+        ...avoid.map(s => `Avoid for now: ${s.state} has ${s.cpomRisk} CPOM risk and ${s.licensingComplexity} licensing complexity.`)
+      ]);
     }
 
     function diligenceEscalations(rows) {
       const items = rows.filter(r => /high/i.test(r.riskLevel) || /blocked/i.test(r.status)).slice(0, 8);
-      return `<ul class="insights">${items.map(r => `<li>${r.item} for ${r.relatedTarget}: ${r.status}, ${r.riskLevel} risk, owner ${r.owner}. ${r.notes}</li>`).join("")}</ul>`;
+      return insightsList(items.map(r => `${r.item} for ${r.relatedTarget}: ${r.status}, ${r.riskLevel} risk, owner ${r.owner}. ${r.notes}`));
     }
 
     function integrationRecommendations(rows) {
       const items = rows.filter(r => /high/i.test(r.risk) || r.progress < 25).slice(0, 8);
-      return `<ul class="insights">${items.map(r => `<li>${r.deal}: ${r.item} is ${r.progress}% complete. Next action: ${r.nextAction}.</li>`).join("")}</ul>`;
+      return insightsList(items.map(r => `${r.deal}: ${r.item} is ${r.progress}% complete. Next action: ${r.nextAction}.`));
     }
 
     function miniStat(label, value, note) {
@@ -3652,7 +3616,7 @@
     }
 
     function daysOverdue(dueDate, status) {
-      if (!dueDate || /complete|cancelled/i.test(status || "")) return 0;
+      if (!dueDate || !isActiveStatus(status)) return 0;
       return Math.max(0, daysBetween(dueDate, todayIso()));
     }
 
@@ -3719,6 +3683,80 @@
 
     function escapeAttr(value) {
       return escapeHtml(value).replace(/`/g, "&#96;");
+    }
+
+    // --- Shared utilities extracted from duplicated patterns ---
+
+    function isActiveStatus(status) {
+      return !/complete|cancelled/i.test(status || "");
+    }
+
+    function ownerValueSplit(value) {
+      return `Priya ${shortMoney(value * .5)} | Raghav ${shortMoney(value * .5)}`;
+    }
+
+    function miniStatGrid(stats) {
+      return `<div class="action-panel">${stats.map(([label, value, note]) => miniStat(label, value, note)).join("")}</div>`;
+    }
+
+    function insightsList(items) {
+      return `<ul class="insights">${items.map(text => `<li>${text}</li>`).join("")}</ul>`;
+    }
+
+    function applyScenario(scenarioCases, updateFn, name, button) {
+      setActiveChip(button);
+      setInputs(scenarioCases[name] || {});
+      updateFn();
+    }
+
+    function lineDataset(label, data, color, opts = {}) {
+      return { label, data, borderColor: color, tension: .35, ...opts };
+    }
+
+    function areaDataset(label, data, color, bgOpacity = ".08") {
+      const bg = color.replace("#", "");
+      const r = parseInt(bg.substring(0, 2), 16);
+      const g = parseInt(bg.substring(2, 4), 16);
+      const b = parseInt(bg.substring(4, 6), 16);
+      return { label, data, borderColor: color, backgroundColor: `rgba(${r},${g},${b},${bgOpacity})`, fill: true, tension: .35 };
+    }
+
+    function projectionLineChart(canvasId, projection, monthKey, revenueKey, ebitdaKey, cashKey, revenueColor = "#2563eb") {
+      renderChart(canvasId, "line", {
+        labels: projection.map(p => "M" + p[monthKey]),
+        datasets: [
+          lineDataset("Revenue", projection.map(p => p[revenueKey]), revenueColor),
+          lineDataset("EBITDA", projection.map(p => p[ebitdaKey]), "#059669"),
+          lineDataset("Cumulative cash", projection.map(p => p[cashKey]), "#dc2626")
+        ]
+      }, moneyChartOptions());
+    }
+
+    function buildMonthlyProjection(months, initialCash, monthFn) {
+      const projection = [];
+      let cumulative = initialCash;
+      for (let month = 1; month <= months; month++) {
+        const row = monthFn(month);
+        cumulative += row.ebitda;
+        projection.push({ ...row, month, cumulative });
+      }
+      return projection;
+    }
+
+    function projectionBreakeven(projection) {
+      return projection.find(p => p.ebitda > 0)?.month || `After month ${projection.length}`;
+    }
+
+    function projectionMaxBurn(projection, cashKey = "cumulative") {
+      return Math.abs(Math.min(...projection.map(p => p[cashKey])));
+    }
+
+    function activeTasks() {
+      return app.data.tasks.filter(t => isActiveStatus(t.status));
+    }
+
+    function ownerActiveTasks(owner) {
+      return app.data.tasks.filter(t => t.owner === owner && isActiveStatus(t.status));
     }
 
     try {
