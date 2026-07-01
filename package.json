@@ -1,0 +1,16 @@
+{
+  "name": "my-dashboard",
+  "version": "1.0.0",
+  "main": "src/utils.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "ALPHA MD / MSO Command Center Dashboard",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
