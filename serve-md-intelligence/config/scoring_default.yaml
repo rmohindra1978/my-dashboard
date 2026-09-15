@@ -1,0 +1,48 @@
+# Default SERVE MD Score configuration.
+#
+# Every value here is editable in the score editor UI and can be saved as a named,
+# versioned configuration. Pillar weights are relative (they are normalised to sum to 1);
+# metric weights are relative within their pillar. A metric weight of 0 removes it from the
+# score but keeps it visible on the market profile.
+#
+# normalization: percentile | minmax | zscore
+#   percentile - rank of the market among all markets at the same geo level (robust to outliers)
+#   minmax     - linear scaling between the 2nd and 98th percentile (winsorised)
+#   zscore     - standard score clipped to +-3, mapped to 0-100
+#
+# A metric's direction comes from `higher_is_better` in metrics.yaml and can be overridden
+# per config with `direction_overrides` (e.g. flip ma_penetration_pct for an FFS strategy).
+
+id: default
+name: SERVE MD default (MA / value-based strategy)
+description: Balanced weighting favouring Medicare demand and under-served markets.
+normalization: percentile
+missing_metric_policy: renormalize   # renormalize | zero | exclude_market
+min_coverage_pct: 60                  # markets with less metric coverage than this are flagged low-confidence
+
+pillars:
+  medicare_demand:
+    label: Medicare demand
+    weight: 30
+    description: Size, growth, payer mix and acuity of the Medicare population.
+  demographics_growth:
+    label: Demographics & growth
+    weight: 20
+    description: Size and trajectory of the 65+ population.
+  competition_supply:
+    label: Competition & provider supply
+    weight: 20
+    description: Primary care supply relative to demand and market consolidation.
+  health_need:
+    label: Health need
+    weight: 15
+    description: Chronic disease burden that value-based primary care can manage.
+  economics_cost:
+    label: Economics & cost
+    weight: 15
+    description: Local economics, workforce and occupancy cost proxies.
+
+# metric weights default to `scoring_default` in metrics.yaml; list overrides here.
+metric_weights: {}
+
+direction_overrides: {}

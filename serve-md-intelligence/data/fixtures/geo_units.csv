@@ -1,0 +1,28 @@
+geo_level,geo_id,name,state_fips,state_abbr,lat,lon,land_area_sqmi,cbsa_code,cbsa_name
+state,04,Arizona,04,AZ,,,,,
+state,12,Florida,12,FL,,,,,
+state,48,Texas,48,TX,,,,,
+state,37,North Carolina,37,NC,,,,,
+state,32,Nevada,32,NV,,,,,
+county,04013,Maricopa County,04,AZ,33.35,-112.49,9200.0,38060,"Phoenix-Mesa-Chandler, AZ"
+county,04019,Pima County,04,AZ,32.1,-111.79,9187.0,46060,"Tucson, AZ"
+county,04021,Pinal County,04,AZ,32.9,-111.35,5366.0,38060,"Phoenix-Mesa-Chandler, AZ"
+county,04015,Mohave County,04,AZ,35.7,-113.76,13311.0,29420,"Lake Havasu City-Kingman, AZ"
+county,04025,Yavapai County,04,AZ,34.6,-112.55,8123.0,39150,"Prescott Valley-Prescott, AZ"
+county,12057,Hillsborough County,12,FL,27.91,-82.35,1020.0,45300,"Tampa-St. Petersburg-Clearwater, FL"
+county,12103,Pinellas County,12,FL,27.9,-82.74,274.0,45300,"Tampa-St. Petersburg-Clearwater, FL"
+county,12071,Lee County,12,FL,26.57,-81.84,785.0,15980,"Cape Coral-Fort Myers, FL"
+county,48453,Travis County,48,TX,30.33,-97.78,990.0,12420,"Austin-Round Rock-San Marcos, TX"
+county,48029,Bexar County,48,TX,29.45,-98.52,1240.0,41700,"San Antonio-New Braunfels, TX"
+county,37183,Wake County,37,NC,35.79,-78.65,835.0,39580,"Raleigh-Cary, NC"
+county,32003,Clark County,32,NV,36.21,-115.01,7891.0,29820,"Las Vegas-Henderson-North Las Vegas, NV"
+zcta,85004,85004,04,AZ,33.45,-112.07,26.370321169207585,38060,"Phoenix-Mesa-Chandler, AZ"
+zcta,85008,85008,04,AZ,33.47,-111.98,28.645854874972358,38060,"Phoenix-Mesa-Chandler, AZ"
+zcta,85281,85281,04,AZ,33.43,-111.93,29.85380934060417,38060,"Phoenix-Mesa-Chandler, AZ"
+zcta,85701,85701,04,AZ,32.22,-110.97,5.90154146634559,46060,"Tucson, AZ"
+zcta,33602,33602,12,FL,27.95,-82.46,14.660463477259913,45300,"Tampa-St. Petersburg-Clearwater, FL"
+zcta,78701,78701,48,TX,30.27,-97.74,2.6466680193611696,12420,"Austin-Round Rock-San Marcos, TX"
+place,0455000,Phoenix,04,AZ,33.57,-112.09,331.9024559054195,38060,"Phoenix-Mesa-Chandler, AZ"
+place,0477000,Tucson,04,AZ,32.15,-110.87,282.37932331008824,46060,"Tucson, AZ"
+place,1271000,Tampa,12,FL,27.97,-82.47,401.7046947154131,45300,"Tampa-St. Petersburg-Clearwater, FL"
+place,4805000,Austin,48,TX,30.3,-97.75,471.7664266339102,12420,"Austin-Round Rock-San Marcos, TX"

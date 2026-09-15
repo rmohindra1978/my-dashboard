@@ -1,0 +1,86 @@
+# Default assumptions for the five-year clinic financial model.
+# Every value is editable in the UI and can be saved as a named scenario.
+# Sources and rationale for each default live in docs/assumptions.md.
+
+id: default
+name: De novo Medicare primary care clinic (2 MD + 1 NP)
+model_years: 5
+
+patients:
+  starting_patients: 0            # active Medicare patients at open
+  new_patients_per_month: 65      # steady-state gross adds after ramp
+  ramp_months: 6                  # months to reach new_patients_per_month (linear ramp from 25%)
+  annual_churn_pct: 15            # attrition (mortality, moves, plan switching)
+  panel_cap_per_provider: 800     # max active Medicare patients per FTE provider (senior-focused model)
+  visits_per_patient_per_year: 6.0  # Medicare seniors: office visits + AWV + chronic-care follow-ups
+  market_prefill: true            # seed patient potential from the selected market
+
+payer_mix:
+  ffs_pct: 55                     # Original Medicare fee-for-service share of patients
+  ma_pct: 45                      # Medicare Advantage share of patients
+  ma_capitated_share_pct: 50      # share of MA patients under capitated / full-risk arrangements
+
+reimbursement:
+  ffs_revenue_per_visit: 145      # blended 99213/99214 + AWV + G2211 Medicare allowable per encounter
+  ma_ffs_revenue_per_visit: 138   # MA fee schedule visits (non-capitated)
+  capitated_pmpm: 1100            # gross PMPM received for capitated MA patients
+  capitated_medical_cost_pct: 85  # downstream medical cost share on capitated PMPM (pass-through)
+  care_management_pmpm: 15        # CCM / TCM / RPM fees blended across all patients per month
+  annual_rate_increase_pct: 1.5
+  collection_rate_pct: 96
+
+providers:
+  md_fte: 2
+  md_salary: 265000
+  np_pa_fte: 1
+  np_pa_salary: 130000
+  benefits_load_pct: 22
+  hire_lead_months: 1             # months before opening providers are on payroll
+  add_provider_when_panel_pct: 95 # auto-add a NP/PA when panel utilisation exceeds this
+  max_provider_fte: 4             # site capacity; 0 = unlimited
+
+staffing:                         # non-provider staff; ratios are per provider FTE
+  medical_assistants_per_provider: 1.25
+  medical_assistant_salary: 46000
+  front_desk_per_provider: 0.6
+  front_desk_salary: 40000
+  care_coordinators_per_provider: 0.4
+  care_coordinator_salary: 62000
+  practice_manager_fte: 1
+  practice_manager_salary: 85000
+  benefits_load_pct: 22
+  annual_wage_inflation_pct: 3
+
+facility:
+  square_feet: 4000
+  rent_per_sqft_per_year: 28
+  cam_and_utilities_per_sqft_per_year: 8
+  annual_rent_escalator_pct: 3
+  buildout_cost_per_sqft: 120     # start-up capex
+  equipment_and_it_capex: 180000
+  months_free_rent: 3
+
+diagnostics:
+  in_office_diagnostics_revenue_per_visit: 22   # labs, EKG, spirometry etc.
+  diagnostics_cost_pct_of_revenue: 45
+
+marketing:
+  cost_per_new_patient: 180       # CAC
+  fixed_marketing_per_month: 6000
+  launch_marketing_budget: 60000  # pre-opening
+
+overhead:
+  variable_overhead_pct_of_revenue: 8   # billing, supplies, malpractice (variable component)
+  fixed_gna_per_month: 18000            # insurance, admin, accounting, IT, misc
+  annual_overhead_inflation_pct: 3
+  emr_per_provider_per_month: 650
+
+growth:
+  annual_patient_growth_pct_after_year2: 5   # applied to steady-state new-patient adds from year 3
+  annual_visit_intensity_change_pct: 0
+
+capital:
+  working_capital_months: 3       # months of opex funded at open
+  terminal_ebitda_multiple: 8     # used for IRR with terminal value (set 0 to exclude)
+  discount_rate_pct: 12
+  tax_rate_pct: 0                 # EBITDA-based returns by default

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/playwright-report/
+frontend/test-results/
+
+# Data (downloaded / built artifacts; rebuild with `make data`)
+data/raw/
+data/warehouse/*.duckdb
+data/warehouse/*.duckdb.wal
+data/warehouse/*.parquet
+data/geo/*.geojson
+!data/fixtures/
+
+# Env / OS
+.env
+.DS_Store
+*.tsbuildinfo

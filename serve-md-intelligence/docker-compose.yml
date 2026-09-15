@@ -1,0 +1,9 @@
+services:
+  servemd:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SERVEMD_ACCESS_TOKEN: ${SERVEMD_ACCESS_TOKEN:-}
+    volumes:
+      - ./data:/app/data

@@ -12,5 +12,11 @@
   "description": "ALPHA MD / MSO Command Center Dashboard",
   "devDependencies": {
     "jest": "^30.4.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/serve-md-intelligence/"
+    ]
   }
 }
