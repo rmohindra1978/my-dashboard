@@ -28,18 +28,18 @@ function Metric({ m }: { m: MetricReading }) {
 
 export default function MarketPage() {
   const { level = "county", id = "" } = useParams<{ level: GeoLevel; id: string }>();
-  const { config, dirty } = useScoreConfig();
+  const { config, dirty, custom } = useScoreConfig();
   const profile = useQuery({ queryKey: ["market", level, id], queryFn: () => api.market(level as GeoLevel, id) });
   const live = useQuery({
     queryKey: ["explain", level, id, config],
     queryFn: () => api.explain(level as GeoLevel, id, config ?? undefined),
-    enabled: dirty && !!config,
+    enabled: custom && !!config,
   });
 
   if (profile.isLoading) return <p className="text-slate-500">Loading market…</p>;
   if (profile.isError || !profile.data) return <p className="text-red-600">Market not found.</p>;
   const p = profile.data;
-  const score = dirty && live.data ? live.data : p.score;
+  const score = custom && live.data ? live.data : p.score;
   const peerLabel = level === "county" || level === "state" ? "all US " + level + " markets" : `${level.toUpperCase()}s in ${p.geo.state_abbr}`;
 
   return (

@@ -11,7 +11,7 @@ const BASEMAP = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 const SRC = "markets";
 
 export default function MapPage() {
-  const { config, dirty } = useScoreConfig();
+  const { config, dirty, custom, savedId } = useScoreConfig();
   const [level, setLevel] = useState<GeoLevel>("county");
   const [states, setStates] = useState<string[]>([]);
   const [minScore, setMinScore] = useState(0);
@@ -23,8 +23,8 @@ export default function MapPage() {
   const [hover, setHover] = useState<Record<string, unknown> | null>(null);
 
   const layer = useQuery({
-    queryKey: ["map", level, states, dirty ? config : "default"],
-    queryFn: () => api.mapLayer(level, dirty && config ? { config, states } : { configId: "default", states }),
+    queryKey: ["map", level, states, custom ? config : "default"],
+    queryFn: () => api.mapLayer(level, custom && config ? { config, states } : { configId: "default", states }),
   });
 
   useEffect(() => {
@@ -131,7 +131,11 @@ export default function MapPage() {
           <input type="range" min={0} max={100} value={minScore} className="w-full" onChange={(e) => setMinScore(Number(e.target.value))} />
         </div>
         <div className="ml-auto text-sm text-slate-500">
-          {dirty && <span className="mr-2 rounded bg-amber-50 px-2 py-1 text-amber-700">using unsaved score edits</span>}
+          {dirty ? (
+            <span className="mr-2 rounded bg-amber-50 px-2 py-1 text-amber-700">using unsaved score edits</span>
+          ) : (
+            savedId !== "default" && <span className="mr-2 rounded bg-slate-100 px-2 py-1 text-slate-600">score config: {savedId}</span>
+          )}
           {layer.data ? `${layer.data.features.length.toLocaleString()} features` : layer.isLoading ? "Loading…" : ""}
         </div>
       </div>

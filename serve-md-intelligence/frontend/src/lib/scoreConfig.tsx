@@ -8,6 +8,8 @@ interface Ctx {
   config: ScoreConfig | null;
   savedId: string;
   dirty: boolean;
+  /** true when consumers must post the active config (unsaved edits, or a saved non-default version) */
+  custom: boolean;
   setConfig: (c: ScoreConfig) => void;
   reset: () => void;
   markSaved: (c: ScoreConfig) => void;
@@ -32,6 +34,10 @@ export function ScoreConfigProvider({ children }: { children: ReactNode }) {
       config,
       savedId: baseline?.id ?? "default",
       dirty: !!config && !!baseline && JSON.stringify(config) !== JSON.stringify(baseline),
+      custom:
+        !!config &&
+        !!baseline &&
+        (JSON.stringify(config) !== JSON.stringify(baseline) || baseline.id !== "default"),
       setConfig: setConfigState,
       reset: () => baseline && setConfigState(baseline),
       markSaved: (c) => {

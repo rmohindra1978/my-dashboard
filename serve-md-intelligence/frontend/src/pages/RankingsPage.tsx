@@ -16,7 +16,7 @@ const TABLE_COLS: { id: string; label: string; format: string }[] = [
 ];
 
 export default function RankingsPage() {
-  const { config, dirty } = useScoreConfig();
+  const { config, dirty, custom, savedId } = useScoreConfig();
   const [level, setLevel] = useState<GeoLevel>("county");
   const [states, setStates] = useState<string[]>([]);
   const [filters, setFilters] = useState<MetricFilter[]>([]);
@@ -30,8 +30,8 @@ export default function RankingsPage() {
   const req = useMemo<RankingRequest>(
     () => ({
       geo_level: level,
-      config_id: dirty ? null : "default",
-      config: dirty ? config : null,
+      config_id: custom ? null : "default",
+      config: custom ? config : null,
       states: states.length ? states : null,
       filters,
       limit: pageSize,
@@ -40,7 +40,7 @@ export default function RankingsPage() {
       sort_by: sortBy,
       descending: desc,
     }),
-    [level, states, filters, sortBy, desc, page, dirty, config],
+    [level, states, filters, sortBy, desc, page, custom, config],
   );
   const { data, isFetching, error } = useQuery({ queryKey: ["rank", req], queryFn: () => api.rank(req), placeholderData: (prev) => prev });
 
@@ -100,7 +100,11 @@ export default function RankingsPage() {
         </div>
         <FilterEditor filters={filters} onChange={(f) => { setFilters(f); setPage(0); }} metrics={registry?.metrics.map((m) => ({ id: m.id, label: m.label })) ?? []} />
         <div className="ml-auto flex items-center gap-2 text-sm text-slate-500">
-          {dirty && <span className="rounded bg-amber-50 px-2 py-1 text-amber-700">using unsaved score edits</span>}
+          {dirty ? (
+            <span className="rounded bg-amber-50 px-2 py-1 text-amber-700">using unsaved score edits</span>
+          ) : (
+            savedId !== "default" && <span className="rounded bg-slate-100 px-2 py-1 text-slate-600">score config: {savedId}</span>
+          )}
           {data && (
             <span>
               {data.total.toLocaleString()} markets · {data.computed_in_ms.toFixed(0)} ms
