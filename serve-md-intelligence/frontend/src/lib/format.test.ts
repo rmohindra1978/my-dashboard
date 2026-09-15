@@ -13,6 +13,8 @@ describe("format helpers", () => {
     expect(fmtUsd(1_500_000)).toBe("$1.50M");
     expect(fmtUsd(-42_000)).toBe("-$42k");
     expect(fmtUsd(999)).toBe("$999");
+    expect(fmtUsd(-0, false)).toBe("$0");
+    expect(fmtUsd(-0.2)).toBe("$0");
   });
   it("maps scores to the red→green ramp", () => {
     expect(scoreColor(null)).toBe("#cbd5e1");

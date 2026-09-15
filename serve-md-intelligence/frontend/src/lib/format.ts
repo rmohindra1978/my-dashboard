@@ -16,6 +16,7 @@ export function fmtMetric(value: number | null | undefined, format: string, unit
 
 export function fmtUsd(v: number | null | undefined, compact = true): string {
   if (v === null || v === undefined || Number.isNaN(v)) return "—";
+  if (Object.is(v, -0) || Math.abs(v) < 0.5) v = 0;
   const sign = v < 0 ? "-" : "";
   const abs = Math.abs(v);
   if (compact && abs >= 1_000_000) return `${sign}$${(abs / 1_000_000).toFixed(2)}M`;
