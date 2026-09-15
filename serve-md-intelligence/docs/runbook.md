@@ -32,6 +32,16 @@ others; `market_features` is rebuilt after every successful load.
 Expected order of magnitude on a laptop: Census geography + ACS ≈ 5–10 min (large files), CMS
 enrollment / geographic variation ≈ 2 min, clinician file ≈ 3 min (2.5 M rows), HRSA / CDC < 1 min.
 
+Measured per source (download once, then cached; transform time and peak memory on a laptop-class VM):
+
+| source | raw file(s) | download | transform + load | peak RSS | rows loaded |
+|---|---|---|---|---|---|
+| `hrsa_hpsa` | `BCD_HPSA_FCT_DET_PC.csv` ≈ 48 MB (80 k component rows) | ~10 s | < 1 s | ~300 MB | 6,166 (3,083 counties × 2 metrics) |
+| `cdc_places` | `places_county_swc5-untb.csv` ≈ 53 MB (230 k rows) | ~20 s | < 1 s | ~300 MB | 21,042 (2,957 counties + 49 states × 7 metrics) |
+
+HRSA regenerates its extract frequently; delete `data/raw/hrsa_hpsa/BCD_HPSA_FCT_DET_PC.csv` to pick
+up new designations (rows land under a new `YYYY-MM` period; `market_features` keeps the latest).
+
 ## Production-style single process
 
 ```bash

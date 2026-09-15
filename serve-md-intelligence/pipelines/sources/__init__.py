@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from pipelines.base import Source
+from pipelines.sources.cdc_places import PlacesSource
+from pipelines.sources.hrsa_hpsa import HpsaSource
 from pipelines.sources.sample import SampleFixtureSource
 
 SOURCES: dict[str, type[Source]] = {
@@ -12,8 +14,8 @@ SOURCES: dict[str, type[Source]] = {
     # "cms_geo_variation": GeoVariationSource,
     # "cms_enrollment": EnrollmentSource,
     # "dac_clinicians": CliniciansSource,
-    # "hrsa_hpsa": HpsaSource,
-    # "cdc_places": PlacesSource,
+    "hrsa_hpsa": HpsaSource,
+    "cdc_places": PlacesSource,
 }
 
 SAMPLE_SOURCES: dict[str, type[Source]] = {"sample": SampleFixtureSource}
