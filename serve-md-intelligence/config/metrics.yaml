@@ -1,0 +1,581 @@
+# SERVE MD Intelligence - metric registry
+#
+# This file is the single source of truth for every market metric the system knows about.
+# Adding a dataset or a scoring variable = add a `sources` entry (if new) and one or more
+# `metrics` entries. No code or schema changes are required for the API, the score editor,
+# the data dictionary, or the market profile to pick a new metric up.
+#
+# metric fields
+#   id                 stable snake_case identifier; stored in metric_values.metric_id
+#   label              short human label
+#   description        one-sentence description shown in the UI tooltip and data dictionary
+#   pillar             one of the pillar ids in scoring_default.yaml
+#   unit               count | pct | ratio | usd | years | score | flag | per_1000 | per_10k | per_sqmi
+#   higher_is_better   true / false / null (null = informational only, cannot be scored)
+#   geo_levels         which geography levels the pipeline produces this metric for
+#   source             id of the entry in `sources`
+#   derivation         free text explaining how the metric is computed from the source fields
+#   scoring_default    default weight inside its pillar (0 disables); overridable per score config
+#   format             display format hint for the UI: integer | percent | currency | decimal1 | decimal2
+
+sources:
+  acs5:
+    name: American Community Survey 5-Year Summary File (table-based)
+    publisher: U.S. Census Bureau
+    url: https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/
+    vintage: "2019-2023"
+    geo_levels: [state, county, zcta, place]
+    notes: One pipe-delimited file per table covering every geography; no API key required.
+  popest:
+    name: Population Estimates Program, County Characteristics by Age and Sex (Vintage 2024)
+    publisher: U.S. Census Bureau
+    url: https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/asrh/cc-est2024-agesex-all.csv
+    vintage: "2020-2024"
+    geo_levels: [county]
+  cms_geo_variation:
+    name: Medicare Geographic Variation Public Use File - by National, State & County
+    publisher: Centers for Medicare & Medicaid Services
+    url: https://data.cms.gov/data-api/v1/dataset/6219697b-8f6c-4164-bed4-cd9317c58ebc/data
+    vintage: "2014-2024"
+    geo_levels: [state, county]
+    notes: Original Medicare (FFS) beneficiaries, BENE_AGE_LVL = 'All'. Suppressed cells (*) become null. The 2014-2024 release no longer carries BENE_AVG_RISK_SCRE, so avg_hcc_risk_score is null until CMS restores the column.
+  cms_enrollment:
+    name: Medicare Monthly Enrollment
+    publisher: Centers for Medicare & Medicaid Services
+    url: https://data.cms.gov/data-api/v1/dataset/d7fabe1e-d19b-4333-9eff-e80e0643f2fd/data
+    vintage: "2013-2026 (monthly; annual rows MONTH=Year)"
+    geo_levels: [state, county]
+    notes: Annual-average rows only (MONTH = 'Year'); the latest YEAR with annual rows is used. County id = BENE_FIPS_CD; 'Unknown' (xx999) counties and territories are dropped.
+  dac_clinicians:
+    name: Doctors and Clinicians National Downloadable File
+    publisher: Centers for Medicare & Medicaid Services
+    url: https://data.cms.gov/provider-data/dataset/mj5m-pzi6
+    vintage: "monthly refresh"
+    geo_levels: [county, zcta]
+    notes: Clinician x practice-location rows; practice ZIP mapped to ZCTA then to county by the crosswalk.
+  hrsa_hpsa:
+    name: Health Professional Shortage Areas - Primary Care
+    publisher: Health Resources & Services Administration
+    url: https://data.hrsa.gov/DataDownload/DD_Files/BCD_HPSA_FCT_DET_PC.csv
+    vintage: "current designations (file refreshed by HRSA; period = YYYY-MM of the extract)"
+    geo_levels: [county]
+    notes: All component types (tract, county subdivision, single county, facility) count; a 0 flag is emitted for every county in the file.
+  cdc_places:
+    name: PLACES - Local Data for Better Health, County Data
+    publisher: Centers for Disease Control and Prevention
+    url: https://data.cdc.gov/api/views/swc5-untb/rows.csv?accessType=DOWNLOAD
+    vintage: "2025 release (BRFSS 2023); period = latest Year per measure"
+    geo_levels: [state, county]
+    notes: Age-adjusted prevalence preferred, crude used when the age-adjusted cell is suppressed. State values are adult-population-weighted county means. KY and PA have no 2023 estimates.
+  census_geo:
+    name: Gazetteer files, 2020 relationship files and cartographic boundary files
+    publisher: U.S. Census Bureau
+    url: https://www2.census.gov/geo/docs/maps-data/data/
+    vintage: "2023 gazetteer / 2020 relationships / 2023 boundaries"
+    geo_levels: [state, county, zcta, place]
+
+metrics:
+  # ------------------------------------------------------------------ demographics_growth
+  - id: pop_total
+    label: Total population
+    description: Total resident population.
+    pillar: demographics_growth
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B01001_E001
+    scoring_default: 0
+  - id: pop_65_plus
+    label: Population 65+
+    description: Residents aged 65 and over.
+    pillar: demographics_growth
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: sum(B01001_E020..E025) + sum(B01001_E044..E049)
+    scoring_default: 30
+  - id: pct_65_plus
+    label: Share 65+
+    description: Share of the population aged 65 and over.
+    pillar: demographics_growth
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: pop_65_plus / pop_total
+    scoring_default: 20
+  - id: pop_75_plus
+    label: Population 75+
+    description: Residents aged 75 and over (higher utilization cohort).
+    pillar: demographics_growth
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: sum(B01001_E022..E025) + sum(B01001_E046..E049)
+    scoring_default: 10
+  - id: median_age
+    label: Median age
+    description: Median age of the population.
+    pillar: demographics_growth
+    unit: years
+    format: decimal1
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B01002_E001
+    scoring_default: 0
+  - id: pop_65_plus_growth_5yr
+    label: 65+ growth (2020-2024)
+    description: Percent change in the 65+ population between the 2020 base and the 2024 estimate.
+    pillar: demographics_growth
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [county, state]
+    source: popest
+    derivation: (AGE65PLUS_TOT[2024] - AGE65PLUS_TOT[2020]) / AGE65PLUS_TOT[2020]
+    scoring_default: 25
+  - id: pop_growth_5yr
+    label: Population growth (2020-2024)
+    description: Percent change in total population between 2020 and 2024.
+    pillar: demographics_growth
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [county, state]
+    source: popest
+    derivation: (POPESTIMATE[2024] - POPESTIMATE[2020]) / POPESTIMATE[2020]
+    scoring_default: 10
+  - id: pop_density
+    label: Population density
+    description: Residents per square mile of land area.
+    pillar: demographics_growth
+    unit: per_sqmi
+    format: decimal1
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: census_geo
+    derivation: pop_total / ALAND_SQMI
+    scoring_default: 5
+  - id: pct_65_living_alone
+    label: 65+ living alone
+    description: Share of households with a 65+ member that are one-person households.
+    pillar: demographics_growth
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B11007_E003 / B11007_E002
+    scoring_default: 0
+
+  # ------------------------------------------------------------------ medicare_demand
+  - id: medicare_benes_total
+    label: Medicare beneficiaries
+    description: Total Medicare beneficiaries (Original Medicare + Medicare Advantage), latest annual figure.
+    pillar: medicare_demand
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: TOT_BENES where MONTH = 'Year', latest YEAR
+    scoring_default: 25
+  - id: medicare_benes_aged
+    label: Aged beneficiaries (65+)
+    description: Medicare beneficiaries entitled by age (excludes disability-only).
+    pillar: medicare_demand
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: AGED_TOT_BENES
+    scoring_default: 0
+  - id: original_medicare_benes
+    label: Original Medicare beneficiaries
+    description: Beneficiaries in traditional fee-for-service Medicare.
+    pillar: medicare_demand
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: ORGNL_MDCR_BENES
+    scoring_default: 0
+  - id: medicare_ma_benes
+    label: Medicare Advantage beneficiaries
+    description: Beneficiaries enrolled in Medicare Advantage or other health plans.
+    pillar: medicare_demand
+    unit: count
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: MA_AND_OTH_BENES
+    scoring_default: 10
+  - id: ma_penetration_pct
+    label: MA penetration
+    description: Share of beneficiaries enrolled in Medicare Advantage. Direction reflects a value-based / MA contracting strategy; flip in the score editor for an FFS strategy.
+    pillar: medicare_demand
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: MA_AND_OTH_BENES / TOT_BENES * 100
+    scoring_default: 15
+  - id: dual_eligible_pct
+    label: Dual-eligible share
+    description: Share of beneficiaries also enrolled in Medicaid (full or partial).
+    pillar: medicare_demand
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: DUAL_TOT_BENES / TOT_BENES * 100
+    scoring_default: 10
+  - id: medicare_benes_growth_5yr
+    label: Beneficiary growth (5 yr)
+    description: Percent change in total beneficiaries over the latest five annual periods.
+    pillar: medicare_demand
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_enrollment
+    derivation: (TOT_BENES[YEAR] / TOT_BENES[YEAR-5] - 1) * 100, annual rows
+    scoring_default: 10
+  - id: avg_hcc_risk_score
+    label: Avg HCC risk score
+    description: Average CMS-HCC risk score of Original Medicare beneficiaries (1.0 = national average).
+    pillar: medicare_demand
+    unit: score
+    format: decimal2
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_geo_variation
+    derivation: BENE_AVG_RISK_SCRE, latest YEAR, BENE_AGE_LVL = 'All' (column absent from the current release; emitted when present)
+    scoring_default: 15
+  - id: medicare_spend_per_capita_std
+    label: Standardized spend per beneficiary
+    description: Total Medicare standardized (price-adjusted) payment per Original Medicare beneficiary.
+    pillar: medicare_demand
+    unit: usd
+    format: currency
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_geo_variation
+    derivation: TOT_MDCR_STDZD_PYMT_PC
+    scoring_default: 5
+  - id: ed_visits_per_1000
+    label: ED visits per 1,000
+    description: Emergency department visits per 1,000 Original Medicare beneficiaries (avoidable-utilization opportunity).
+    pillar: medicare_demand
+    unit: per_1000
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_geo_variation
+    derivation: ER_VISITS_PER_1000_BENES
+    scoring_default: 5
+  - id: readmission_rate
+    label: 30-day readmission rate
+    description: Acute hospital readmission rate among Original Medicare beneficiaries.
+    pillar: medicare_demand
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_geo_variation
+    derivation: ACUTE_HOSP_READMSN_PCT * 100 (source is a 0-1 fraction)
+    scoring_default: 0
+  - id: ip_stays_per_1000
+    label: Inpatient stays per 1,000
+    description: Inpatient covered stays per 1,000 Original Medicare beneficiaries.
+    pillar: medicare_demand
+    unit: per_1000
+    format: integer
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cms_geo_variation
+    derivation: IP_CVRD_STAYS_PER_1000_BENES
+    scoring_default: 5
+
+  # ------------------------------------------------------------------ competition_supply
+  - id: pcp_count
+    label: Primary care clinicians
+    description: Unique Medicare-enrolled primary care clinicians (IM, FM, GP, geriatrics, NP, PA) with a practice location in the area.
+    pillar: competition_supply
+    unit: count
+    format: integer
+    higher_is_better: false
+    geo_levels: [county, zcta]
+    source: dac_clinicians
+    derivation: count(distinct NPI) where pri_spec in primary-care set, by practice ZIP -> ZCTA -> county
+    scoring_default: 0
+  - id: pcp_physician_count
+    label: Primary care physicians
+    description: Unique primary care physicians (MD/DO) only, excluding NPs and PAs.
+    pillar: competition_supply
+    unit: count
+    format: integer
+    higher_is_better: false
+    geo_levels: [county, zcta]
+    source: dac_clinicians
+    derivation: count(distinct NPI) where pri_spec in (INTERNAL MEDICINE, FAMILY PRACTICE, GENERAL PRACTICE, GERIATRIC MEDICINE)
+    scoring_default: 0
+  - id: pcp_per_1000_65plus
+    label: PCPs per 1,000 residents 65+
+    description: Primary care clinicians per 1,000 residents aged 65+; lower supply signals unmet demand.
+    pillar: competition_supply
+    unit: per_1000
+    format: decimal2
+    higher_is_better: false
+    geo_levels: [county, zcta]
+    source: dac_clinicians
+    derivation: pcp_count / pop_65_plus * 1000
+    scoring_default: 40
+  - id: pcp_per_10k_pop
+    label: PCPs per 10,000 residents
+    description: Primary care clinicians per 10,000 residents.
+    pillar: competition_supply
+    unit: per_10k
+    format: decimal2
+    higher_is_better: false
+    geo_levels: [county, zcta]
+    source: dac_clinicians
+    derivation: pcp_count / pop_total * 10000
+    scoring_default: 15
+  - id: large_group_pcp_share
+    label: PCPs in large groups
+    description: Share of primary care clinicians practicing in groups with 50 or more members (consolidated competition).
+    pillar: competition_supply
+    unit: pct
+    format: percent
+    higher_is_better: false
+    geo_levels: [county, zcta]
+    source: dac_clinicians
+    derivation: count(distinct NPI where num_org_mem >= 50) / pcp_count
+    scoring_default: 15
+  - id: hpsa_primary_care_flag
+    label: HPSA designated
+    description: 1 if any active primary care HPSA designation covers the county.
+    pillar: competition_supply
+    unit: flag
+    format: integer
+    higher_is_better: true
+    geo_levels: [county]
+    source: hrsa_hpsa
+    derivation: any(HPSA Status = 'Designated' or 'Proposed For Withdrawal') by Common State County FIPS Code
+    scoring_default: 10
+  - id: hpsa_score_max
+    label: HPSA score (max)
+    description: Highest primary care HPSA score (0-25) among designations in the county.
+    pillar: competition_supply
+    unit: score
+    format: integer
+    higher_is_better: true
+    geo_levels: [county]
+    source: hrsa_hpsa
+    derivation: max(HPSA Score)
+    scoring_default: 20
+
+  # ------------------------------------------------------------------ health_need
+  - id: diabetes_prevalence
+    label: Diabetes prevalence
+    description: Age-adjusted prevalence of diagnosed diabetes among adults.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = DIABETES, datavaluetypeid = AgeAdjPrv (CrdPrv when suppressed); state = TotalPop18plus-weighted mean of counties
+    scoring_default: 25
+  - id: obesity_prevalence
+    label: Obesity prevalence
+    description: Age-adjusted prevalence of obesity among adults.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = OBESITY
+    scoring_default: 10
+  - id: hypertension_prevalence
+    label: Hypertension prevalence
+    description: Age-adjusted prevalence of high blood pressure among adults.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = BPHIGH
+    scoring_default: 20
+  - id: chd_prevalence
+    label: Coronary heart disease prevalence
+    description: Age-adjusted prevalence of coronary heart disease among adults.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = CHD
+    scoring_default: 15
+  - id: copd_prevalence
+    label: COPD prevalence
+    description: Age-adjusted prevalence of COPD among adults.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = COPD
+    scoring_default: 10
+  - id: fair_poor_health_pct
+    label: Fair or poor self-rated health
+    description: Age-adjusted share of adults reporting fair or poor general health.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: measureid = GHLTH
+    scoring_default: 10
+  - id: no_checkup_pct
+    label: No routine checkup (past year)
+    description: Age-adjusted share of adults with no routine checkup in the past year (engagement opportunity).
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county]
+    source: cdc_places
+    derivation: 100 - (measureid = CHECKUP, datavaluetypeid = AgeAdjPrv)
+    scoring_default: 5
+  - id: pct_65_plus_disability
+    label: 65+ with a disability
+    description: Share of residents aged 65+ reporting one or more disabilities.
+    pillar: health_need
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: (B18101_E016 + B18101_E019 + B18101_E035 + B18101_E038) / (B18101_E015 + B18101_E018 + B18101_E034 + B18101_E037)
+    scoring_default: 5
+
+  # ------------------------------------------------------------------ economics_cost
+  - id: median_household_income
+    label: Median household income
+    description: Median household income in the past 12 months (inflation-adjusted dollars).
+    pillar: economics_cost
+    unit: usd
+    format: currency
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B19013_E001
+    scoring_default: 20
+  - id: per_capita_income
+    label: Per-capita income
+    description: Per-capita income in the past 12 months.
+    pillar: economics_cost
+    unit: usd
+    format: currency
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B19301_E001
+    scoring_default: 0
+  - id: poverty_rate_65_plus
+    label: 65+ poverty rate
+    description: Share of residents aged 65+ below the poverty level.
+    pillar: economics_cost
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: (B17001_E015 + B17001_E016 + B17001_E029 + B17001_E030) / (sum of the same cells across below- and above-poverty groups)
+    scoring_default: 10
+  - id: unemployment_rate
+    label: Unemployment rate
+    description: Unemployed share of the civilian labor force (16+).
+    pillar: economics_cost
+    unit: pct
+    format: percent
+    higher_is_better: false
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B23025_E005 / B23025_E003
+    scoring_default: 10
+  - id: median_home_value
+    label: Median home value
+    description: Median value of owner-occupied housing units (real-estate cost proxy).
+    pillar: economics_cost
+    unit: usd
+    format: currency
+    higher_is_better: false
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B25077_E001
+    scoring_default: 20
+  - id: median_gross_rent
+    label: Median gross rent
+    description: Median monthly gross rent (occupancy cost proxy for clinic lease rates).
+    pillar: economics_cost
+    unit: usd
+    format: currency
+    higher_is_better: false
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B25064_E001
+    scoring_default: 25
+  - id: pct_bachelors_plus
+    label: Bachelor's degree or higher
+    description: Share of residents 25+ with a bachelor's degree or higher (workforce / recruiting proxy).
+    pillar: economics_cost
+    unit: pct
+    format: percent
+    higher_is_better: true
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: sum(B15003_E022..E025) / B15003_E001
+    scoring_default: 15
+  - id: pct_hispanic
+    label: Hispanic or Latino share
+    description: Share of the population that is Hispanic or Latino (informational; used for service-design, not scored by default).
+    pillar: economics_cost
+    unit: pct
+    format: percent
+    higher_is_better: null
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B03002_E012 / B03002_E001
+    scoring_default: 0
+  - id: pct_black
+    label: Black or African American share
+    description: Share of the population that is Black or African American, not Hispanic (informational).
+    pillar: economics_cost
+    unit: pct
+    format: percent
+    higher_is_better: null
+    geo_levels: [state, county, zcta, place]
+    source: acs5
+    derivation: B03002_E004 / B03002_E001
+    scoring_default: 0

@@ -1,0 +1,896 @@
+geo_level,geo_id,metric_id,period,value,source_id
+state,04,pop_total,2019-2023,421177.0,acs5
+state,04,pop_65_plus,2019-2023,219736.0,acs5
+state,04,pct_65_plus,2019-2023,,acs5
+state,04,pop_75_plus,2019-2023,165288.0,acs5
+state,04,median_age,2019-2023,42.32,acs5
+state,04,pop_65_plus_growth_5yr,2020-2024,26.021,popest
+state,04,pop_growth_5yr,2020-2024,2.799,popest
+state,04,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2747.837,census_geo
+state,04,pct_65_living_alone,2019-2023,23.785,acs5
+state,04,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),37780.0,cms_enrollment
+state,04,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),125293.0,cms_enrollment
+state,04,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),93098.0,cms_enrollment
+state,04,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),293471.0,cms_enrollment
+state,04,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),49.742,cms_enrollment
+state,04,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),11.552,cms_enrollment
+state,04,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),13.872,cms_enrollment
+state,04,avg_hcc_risk_score,2014-2024,0.982,cms_geo_variation
+state,04,medicare_spend_per_capita_std,2014-2024,,cms_geo_variation
+state,04,ed_visits_per_1000,2014-2024,818.647,cms_geo_variation
+state,04,readmission_rate,2014-2024,17.983,cms_geo_variation
+state,04,ip_stays_per_1000,2014-2024,213.052,cms_geo_variation
+state,04,pct_65_plus_disability,2019-2023,30.799,acs5
+state,04,median_household_income,2019-2023,98805.168,acs5
+state,04,per_capita_income,2019-2023,33307.922,acs5
+state,04,poverty_rate_65_plus,2019-2023,11.92,acs5
+state,04,unemployment_rate,2019-2023,6.853,acs5
+state,04,median_home_value,2019-2023,274243.147,acs5
+state,04,median_gross_rent,2019-2023,1404.277,acs5
+state,04,pct_bachelors_plus,2019-2023,51.429,acs5
+state,04,pct_hispanic,2019-2023,24.708,acs5
+state,04,pct_black,2019-2023,10.373,acs5
+state,12,pop_total,2019-2023,3666432.0,acs5
+state,12,pop_65_plus,2019-2023,130873.0,acs5
+state,12,pct_65_plus,2019-2023,16.031,acs5
+state,12,pop_75_plus,2019-2023,155202.0,acs5
+state,12,median_age,2019-2023,38.421,acs5
+state,12,pop_65_plus_growth_5yr,2020-2024,24.75,popest
+state,12,pop_growth_5yr,2020-2024,3.524,popest
+state,12,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1960.703,census_geo
+state,12,pct_65_living_alone,2019-2023,29.521,acs5
+state,12,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),40987.0,cms_enrollment
+state,12,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),84227.0,cms_enrollment
+state,12,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),177198.0,cms_enrollment
+state,12,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),280854.0,cms_enrollment
+state,12,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),39.107,cms_enrollment
+state,12,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),20.448,cms_enrollment
+state,12,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),23.767,cms_enrollment
+state,12,avg_hcc_risk_score,2014-2024,0.954,cms_geo_variation
+state,12,medicare_spend_per_capita_std,2014-2024,10097.259,cms_geo_variation
+state,12,ed_visits_per_1000,2014-2024,659.751,cms_geo_variation
+state,12,readmission_rate,2014-2024,14.11,cms_geo_variation
+state,12,ip_stays_per_1000,2014-2024,245.551,cms_geo_variation
+state,12,pct_65_plus_disability,2019-2023,36.284,acs5
+state,12,median_household_income,2019-2023,,acs5
+state,12,per_capita_income,2019-2023,39923.276,acs5
+state,12,poverty_rate_65_plus,2019-2023,10.23,acs5
+state,12,unemployment_rate,2019-2023,6.759,acs5
+state,12,median_home_value,2019-2023,451990.426,acs5
+state,12,median_gross_rent,2019-2023,1816.148,acs5
+state,12,pct_bachelors_plus,2019-2023,28.859,acs5
+state,12,pct_hispanic,2019-2023,52.132,acs5
+state,12,pct_black,2019-2023,14.611,acs5
+state,48,pop_total,2019-2023,1955991.0,acs5
+state,48,pop_65_plus,2019-2023,796062.0,acs5
+state,48,pct_65_plus,2019-2023,27.678,acs5
+state,48,pop_75_plus,2019-2023,268366.0,acs5
+state,48,median_age,2019-2023,41.543,acs5
+state,48,pop_65_plus_growth_5yr,2020-2024,5.32,popest
+state,48,pop_growth_5yr,2020-2024,10.243,popest
+state,48,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2439.103,census_geo
+state,48,pct_65_living_alone,2019-2023,32.065,acs5
+state,48,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),192044.0,cms_enrollment
+state,48,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),179907.0,cms_enrollment
+state,48,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),352552.0,cms_enrollment
+state,48,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),222337.0,cms_enrollment
+state,48,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),,cms_enrollment
+state,48,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),10.946,cms_enrollment
+state,48,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),19.645,cms_enrollment
+state,48,avg_hcc_risk_score,2014-2024,1.081,cms_geo_variation
+state,48,medicare_spend_per_capita_std,2014-2024,13137.013,cms_geo_variation
+state,48,ed_visits_per_1000,2014-2024,819.153,cms_geo_variation
+state,48,readmission_rate,2014-2024,14.516,cms_geo_variation
+state,48,ip_stays_per_1000,2014-2024,280.836,cms_geo_variation
+state,48,pct_65_plus_disability,2019-2023,30.745,acs5
+state,48,median_household_income,2019-2023,76455.879,acs5
+state,48,per_capita_income,2019-2023,31582.648,acs5
+state,48,poverty_rate_65_plus,2019-2023,15.162,acs5
+state,48,unemployment_rate,2019-2023,4.968,acs5
+state,48,median_home_value,2019-2023,358477.371,acs5
+state,48,median_gross_rent,2019-2023,1497.207,acs5
+state,48,pct_bachelors_plus,2019-2023,50.62,acs5
+state,48,pct_hispanic,2019-2023,36.522,acs5
+state,48,pct_black,2019-2023,10.822,acs5
+state,37,pop_total,2019-2023,2203390.0,acs5
+state,37,pop_65_plus,2019-2023,461438.0,acs5
+state,37,pct_65_plus,2019-2023,14.52,acs5
+state,37,pop_75_plus,2019-2023,322539.0,acs5
+state,37,median_age,2019-2023,41.867,acs5
+state,37,pop_65_plus_growth_5yr,2020-2024,15.106,popest
+state,37,pop_growth_5yr,2020-2024,9.45,popest
+state,37,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1532.43,census_geo
+state,37,pct_65_living_alone,2019-2023,27.764,acs5
+state,37,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),211519.0,cms_enrollment
+state,37,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),42517.0,cms_enrollment
+state,37,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),239946.0,cms_enrollment
+state,37,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),257712.0,cms_enrollment
+state,37,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),55.552,cms_enrollment
+state,37,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),23.473,cms_enrollment
+state,37,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),21.073,cms_enrollment
+state,37,avg_hcc_risk_score,2014-2024,1.238,cms_geo_variation
+state,37,medicare_spend_per_capita_std,2014-2024,11843.669,cms_geo_variation
+state,37,ed_visits_per_1000,2014-2024,522.559,cms_geo_variation
+state,37,readmission_rate,2014-2024,18.481,cms_geo_variation
+state,37,ip_stays_per_1000,2014-2024,326.665,cms_geo_variation
+state,37,pct_65_plus_disability,2019-2023,32.789,acs5
+state,37,median_household_income,2019-2023,94253.784,acs5
+state,37,per_capita_income,2019-2023,50307.326,acs5
+state,37,poverty_rate_65_plus,2019-2023,15.956,acs5
+state,37,unemployment_rate,2019-2023,7.78,acs5
+state,37,median_home_value,2019-2023,282656.374,acs5
+state,37,median_gross_rent,2019-2023,1621.64,acs5
+state,37,pct_bachelors_plus,2019-2023,27.695,acs5
+state,37,pct_hispanic,2019-2023,15.302,acs5
+state,37,pct_black,2019-2023,25.786,acs5
+state,32,pop_total,2019-2023,801766.0,acs5
+state,32,pop_65_plus,2019-2023,577409.0,acs5
+state,32,pct_65_plus,2019-2023,18.13,acs5
+state,32,pop_75_plus,2019-2023,334448.0,acs5
+state,32,median_age,2019-2023,46.611,acs5
+state,32,pop_65_plus_growth_5yr,2020-2024,24.085,popest
+state,32,pop_growth_5yr,2020-2024,11.051,popest
+state,32,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,,census_geo
+state,32,pct_65_living_alone,2019-2023,22.524,acs5
+state,32,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),371189.0,cms_enrollment
+state,32,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),352349.0,cms_enrollment
+state,32,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),46394.0,cms_enrollment
+state,32,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),189344.0,cms_enrollment
+state,32,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),30.476,cms_enrollment
+state,32,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),15.369,cms_enrollment
+state,32,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),5.648,cms_enrollment
+state,32,avg_hcc_risk_score,2014-2024,1.214,cms_geo_variation
+state,32,medicare_spend_per_capita_std,2014-2024,9873.066,cms_geo_variation
+state,32,ed_visits_per_1000,2014-2024,728.286,cms_geo_variation
+state,32,readmission_rate,2014-2024,17.038,cms_geo_variation
+state,32,ip_stays_per_1000,2014-2024,260.866,cms_geo_variation
+state,32,pct_65_plus_disability,2019-2023,39.234,acs5
+state,32,median_household_income,2019-2023,54452.779,acs5
+state,32,per_capita_income,2019-2023,37967.915,acs5
+state,32,poverty_rate_65_plus,2019-2023,8.563,acs5
+state,32,unemployment_rate,2019-2023,6.35,acs5
+state,32,median_home_value,2019-2023,409126.267,acs5
+state,32,median_gross_rent,2019-2023,1287.648,acs5
+state,32,pct_bachelors_plus,2019-2023,28.696,acs5
+state,32,pct_hispanic,2019-2023,,acs5
+state,32,pct_black,2019-2023,7.483,acs5
+county,04013,pop_total,2019-2023,4446673.0,acs5
+county,04013,pop_65_plus,2019-2023,599337.0,acs5
+county,04013,pct_65_plus,2019-2023,25.631,acs5
+county,04013,pop_75_plus,2019-2023,127729.0,acs5
+county,04013,median_age,2019-2023,41.723,acs5
+county,04013,pop_65_plus_growth_5yr,2020-2024,26.476,popest
+county,04013,pop_growth_5yr,2020-2024,4.557,popest
+county,04013,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,466.721,census_geo
+county,04013,pct_65_living_alone,2019-2023,30.914,acs5
+county,04013,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),796328.0,cms_enrollment
+county,04013,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),479585.0,cms_enrollment
+county,04013,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),125812.0,cms_enrollment
+county,04013,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),252546.0,cms_enrollment
+county,04013,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),48.051,cms_enrollment
+county,04013,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),15.563,cms_enrollment
+county,04013,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),14.506,cms_enrollment
+county,04013,avg_hcc_risk_score,2014-2024,0.954,cms_geo_variation
+county,04013,medicare_spend_per_capita_std,2014-2024,11294.07,cms_geo_variation
+county,04013,ed_visits_per_1000,2014-2024,763.335,cms_geo_variation
+county,04013,readmission_rate,2014-2024,17.186,cms_geo_variation
+county,04013,ip_stays_per_1000,2014-2024,234.584,cms_geo_variation
+county,04013,pcp_count,monthly refresh,1090.0,dac_clinicians
+county,04013,pcp_physician_count,monthly refresh,1697.0,dac_clinicians
+county,04013,pcp_per_1000_65plus,monthly refresh,4.318,dac_clinicians
+county,04013,pcp_per_10k_pop,monthly refresh,5.833,dac_clinicians
+county,04013,large_group_pcp_share,monthly refresh,33.905,dac_clinicians
+county,04013,hpsa_primary_care_flag,current designations,1.0,hrsa_hpsa
+county,04013,hpsa_score_max,current designations,6.004,hrsa_hpsa
+county,04013,diabetes_prevalence,2024 release (BRFSS 2022),13.766,cdc_places
+county,04013,obesity_prevalence,2024 release (BRFSS 2022),33.985,cdc_places
+county,04013,hypertension_prevalence,2024 release (BRFSS 2022),35.67,cdc_places
+county,04013,chd_prevalence,2024 release (BRFSS 2022),7.165,cdc_places
+county,04013,copd_prevalence,2024 release (BRFSS 2022),7.098,cdc_places
+county,04013,fair_poor_health_pct,2024 release (BRFSS 2022),22.954,cdc_places
+county,04013,no_checkup_pct,2024 release (BRFSS 2022),26.147,cdc_places
+county,04013,pct_65_plus_disability,2019-2023,41.235,acs5
+county,04013,median_household_income,2019-2023,64697.472,acs5
+county,04013,per_capita_income,2019-2023,28350.878,acs5
+county,04013,poverty_rate_65_plus,2019-2023,12.456,acs5
+county,04013,unemployment_rate,2019-2023,4.104,acs5
+county,04013,median_home_value,2019-2023,213332.396,acs5
+county,04013,median_gross_rent,2019-2023,1257.093,acs5
+county,04013,pct_bachelors_plus,2019-2023,34.023,acs5
+county,04013,pct_hispanic,2019-2023,59.579,acs5
+county,04013,pct_black,2019-2023,10.423,acs5
+county,04019,pop_total,2019-2023,644063.0,acs5
+county,04019,pop_65_plus,2019-2023,449221.0,acs5
+county,04019,pct_65_plus,2019-2023,22.435,acs5
+county,04019,pop_75_plus,2019-2023,,acs5
+county,04019,median_age,2019-2023,42.429,acs5
+county,04019,pop_65_plus_growth_5yr,2020-2024,23.269,popest
+county,04019,pop_growth_5yr,2020-2024,13.008,popest
+county,04019,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2478.488,census_geo
+county,04019,pct_65_living_alone,2019-2023,27.579,acs5
+county,04019,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),81697.0,cms_enrollment
+county,04019,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),,cms_enrollment
+county,04019,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),239885.0,cms_enrollment
+county,04019,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),20621.0,cms_enrollment
+county,04019,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),36.19,cms_enrollment
+county,04019,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),13.926,cms_enrollment
+county,04019,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),13.185,cms_enrollment
+county,04019,avg_hcc_risk_score,2014-2024,1.149,cms_geo_variation
+county,04019,medicare_spend_per_capita_std,2014-2024,13939.529,cms_geo_variation
+county,04019,ed_visits_per_1000,2014-2024,517.416,cms_geo_variation
+county,04019,readmission_rate,2014-2024,19.418,cms_geo_variation
+county,04019,ip_stays_per_1000,2014-2024,297.298,cms_geo_variation
+county,04019,pcp_count,monthly refresh,3782.0,dac_clinicians
+county,04019,pcp_physician_count,monthly refresh,1762.0,dac_clinicians
+county,04019,pcp_per_1000_65plus,monthly refresh,3.087,dac_clinicians
+county,04019,pcp_per_10k_pop,monthly refresh,5.522,dac_clinicians
+county,04019,large_group_pcp_share,monthly refresh,55.516,dac_clinicians
+county,04019,hpsa_primary_care_flag,current designations,1.0,hrsa_hpsa
+county,04019,hpsa_score_max,current designations,,hrsa_hpsa
+county,04019,diabetes_prevalence,2024 release (BRFSS 2022),11.995,cdc_places
+county,04019,obesity_prevalence,2024 release (BRFSS 2022),36.885,cdc_places
+county,04019,hypertension_prevalence,2024 release (BRFSS 2022),29.767,cdc_places
+county,04019,chd_prevalence,2024 release (BRFSS 2022),8.117,cdc_places
+county,04019,copd_prevalence,2024 release (BRFSS 2022),6.237,cdc_places
+county,04019,fair_poor_health_pct,2024 release (BRFSS 2022),17.701,cdc_places
+county,04019,no_checkup_pct,2024 release (BRFSS 2022),28.356,cdc_places
+county,04019,pct_65_plus_disability,2019-2023,33.666,acs5
+county,04019,median_household_income,2019-2023,56510.159,acs5
+county,04019,per_capita_income,2019-2023,49358.694,acs5
+county,04019,poverty_rate_65_plus,2019-2023,12.688,acs5
+county,04019,unemployment_rate,2019-2023,3.315,acs5
+county,04019,median_home_value,2019-2023,407333.977,acs5
+county,04019,median_gross_rent,2019-2023,1039.134,acs5
+county,04019,pct_bachelors_plus,2019-2023,36.713,acs5
+county,04019,pct_hispanic,2019-2023,31.689,acs5
+county,04019,pct_black,2019-2023,27.979,acs5
+county,04021,pop_total,2019-2023,525865.0,acs5
+county,04021,pop_65_plus,2019-2023,414459.0,acs5
+county,04021,pct_65_plus,2019-2023,12.518,acs5
+county,04021,pop_75_plus,2019-2023,11075.0,acs5
+county,04021,median_age,2019-2023,51.523,acs5
+county,04021,pop_65_plus_growth_5yr,2020-2024,29.053,popest
+county,04021,pop_growth_5yr,2020-2024,12.686,popest
+county,04021,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,3280.518,census_geo
+county,04021,pct_65_living_alone,2019-2023,29.045,acs5
+county,04021,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),519072.0,cms_enrollment
+county,04021,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),384785.0,cms_enrollment
+county,04021,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),28246.0,cms_enrollment
+county,04021,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),298289.0,cms_enrollment
+county,04021,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),37.023,cms_enrollment
+county,04021,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),22.293,cms_enrollment
+county,04021,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),21.798,cms_enrollment
+county,04021,avg_hcc_risk_score,2014-2024,1.189,cms_geo_variation
+county,04021,medicare_spend_per_capita_std,2014-2024,13508.636,cms_geo_variation
+county,04021,ed_visits_per_1000,2014-2024,707.458,cms_geo_variation
+county,04021,readmission_rate,2014-2024,14.0,cms_geo_variation
+county,04021,ip_stays_per_1000,2014-2024,247.093,cms_geo_variation
+county,04021,pcp_count,monthly refresh,423.0,dac_clinicians
+county,04021,pcp_physician_count,monthly refresh,455.0,dac_clinicians
+county,04021,pcp_per_1000_65plus,monthly refresh,2.525,dac_clinicians
+county,04021,pcp_per_10k_pop,monthly refresh,8.526,dac_clinicians
+county,04021,large_group_pcp_share,monthly refresh,63.652,dac_clinicians
+county,04021,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,04021,hpsa_score_max,current designations,6.956,hrsa_hpsa
+county,04021,diabetes_prevalence,2024 release (BRFSS 2022),8.381,cdc_places
+county,04021,obesity_prevalence,2024 release (BRFSS 2022),28.568,cdc_places
+county,04021,hypertension_prevalence,2024 release (BRFSS 2022),39.276,cdc_places
+county,04021,chd_prevalence,2024 release (BRFSS 2022),5.115,cdc_places
+county,04021,copd_prevalence,2024 release (BRFSS 2022),4.928,cdc_places
+county,04021,fair_poor_health_pct,2024 release (BRFSS 2022),14.507,cdc_places
+county,04021,no_checkup_pct,2024 release (BRFSS 2022),24.514,cdc_places
+county,04021,pct_65_plus_disability,2019-2023,40.737,acs5
+county,04021,median_household_income,2019-2023,73448.066,acs5
+county,04021,per_capita_income,2019-2023,55924.346,acs5
+county,04021,poverty_rate_65_plus,2019-2023,13.816,acs5
+county,04021,unemployment_rate,2019-2023,6.11,acs5
+county,04021,median_home_value,2019-2023,434462.16,acs5
+county,04021,median_gross_rent,2019-2023,1570.752,acs5
+county,04021,pct_bachelors_plus,2019-2023,47.328,acs5
+county,04021,pct_hispanic,2019-2023,42.658,acs5
+county,04021,pct_black,2019-2023,12.174,acs5
+county,04015,pop_total,2019-2023,2842844.0,acs5
+county,04015,pop_65_plus,2019-2023,396529.0,acs5
+county,04015,pct_65_plus,2019-2023,25.527,acs5
+county,04015,pop_75_plus,2019-2023,254543.0,acs5
+county,04015,median_age,2019-2023,49.417,acs5
+county,04015,pop_65_plus_growth_5yr,2020-2024,23.825,popest
+county,04015,pop_growth_5yr,2020-2024,4.018,popest
+county,04015,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1297.283,census_geo
+county,04015,pct_65_living_alone,2019-2023,22.421,acs5
+county,04015,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),344596.0,cms_enrollment
+county,04015,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),500193.0,cms_enrollment
+county,04015,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),282374.0,cms_enrollment
+county,04015,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),100585.0,cms_enrollment
+county,04015,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),49.907,cms_enrollment
+county,04015,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),16.079,cms_enrollment
+county,04015,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),15.857,cms_enrollment
+county,04015,avg_hcc_risk_score,2014-2024,1.175,cms_geo_variation
+county,04015,medicare_spend_per_capita_std,2014-2024,11902.431,cms_geo_variation
+county,04015,ed_visits_per_1000,2014-2024,683.296,cms_geo_variation
+county,04015,readmission_rate,2014-2024,18.294,cms_geo_variation
+county,04015,ip_stays_per_1000,2014-2024,,cms_geo_variation
+county,04015,pcp_count,monthly refresh,1071.0,dac_clinicians
+county,04015,pcp_physician_count,monthly refresh,1916.0,dac_clinicians
+county,04015,pcp_per_1000_65plus,monthly refresh,5.991,dac_clinicians
+county,04015,pcp_per_10k_pop,monthly refresh,11.506,dac_clinicians
+county,04015,large_group_pcp_share,monthly refresh,55.313,dac_clinicians
+county,04015,hpsa_primary_care_flag,current designations,1.0,hrsa_hpsa
+county,04015,hpsa_score_max,current designations,1.12,hrsa_hpsa
+county,04015,diabetes_prevalence,2024 release (BRFSS 2022),11.396,cdc_places
+county,04015,obesity_prevalence,2024 release (BRFSS 2022),38.464,cdc_places
+county,04015,hypertension_prevalence,2024 release (BRFSS 2022),32.451,cdc_places
+county,04015,chd_prevalence,2024 release (BRFSS 2022),5.398,cdc_places
+county,04015,copd_prevalence,2024 release (BRFSS 2022),8.471,cdc_places
+county,04015,fair_poor_health_pct,2024 release (BRFSS 2022),15.841,cdc_places
+county,04015,no_checkup_pct,2024 release (BRFSS 2022),,cdc_places
+county,04015,pct_65_plus_disability,2019-2023,32.881,acs5
+county,04015,median_household_income,2019-2023,68181.808,acs5
+county,04015,per_capita_income,2019-2023,53468.856,acs5
+county,04015,poverty_rate_65_plus,2019-2023,7.387,acs5
+county,04015,unemployment_rate,2019-2023,6.857,acs5
+county,04015,median_home_value,2019-2023,256689.021,acs5
+county,04015,median_gross_rent,2019-2023,1612.129,acs5
+county,04015,pct_bachelors_plus,2019-2023,25.243,acs5
+county,04015,pct_hispanic,2019-2023,22.209,acs5
+county,04015,pct_black,2019-2023,20.491,acs5
+county,04025,pop_total,2019-2023,2261476.0,acs5
+county,04025,pop_65_plus,2019-2023,111962.0,acs5
+county,04025,pct_65_plus,2019-2023,12.747,acs5
+county,04025,pop_75_plus,2019-2023,99724.0,acs5
+county,04025,median_age,2019-2023,36.141,acs5
+county,04025,pop_65_plus_growth_5yr,2020-2024,20.931,popest
+county,04025,pop_growth_5yr,2020-2024,-0.487,popest
+county,04025,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2254.867,census_geo
+county,04025,pct_65_living_alone,2019-2023,31.07,acs5
+county,04025,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),122793.0,cms_enrollment
+county,04025,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),494009.0,cms_enrollment
+county,04025,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),79298.0,cms_enrollment
+county,04025,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),359037.0,cms_enrollment
+county,04025,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),46.68,cms_enrollment
+county,04025,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),22.147,cms_enrollment
+county,04025,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),6.543,cms_enrollment
+county,04025,avg_hcc_risk_score,2014-2024,0.905,cms_geo_variation
+county,04025,medicare_spend_per_capita_std,2014-2024,13272.346,cms_geo_variation
+county,04025,ed_visits_per_1000,2014-2024,674.913,cms_geo_variation
+county,04025,readmission_rate,2014-2024,14.84,cms_geo_variation
+county,04025,ip_stays_per_1000,2014-2024,307.033,cms_geo_variation
+county,04025,pcp_count,monthly refresh,215.0,dac_clinicians
+county,04025,pcp_physician_count,monthly refresh,1664.0,dac_clinicians
+county,04025,pcp_per_1000_65plus,monthly refresh,5.144,dac_clinicians
+county,04025,pcp_per_10k_pop,monthly refresh,8.396,dac_clinicians
+county,04025,large_group_pcp_share,monthly refresh,30.677,dac_clinicians
+county,04025,hpsa_primary_care_flag,current designations,1.0,hrsa_hpsa
+county,04025,hpsa_score_max,current designations,9.271,hrsa_hpsa
+county,04025,diabetes_prevalence,2024 release (BRFSS 2022),13.945,cdc_places
+county,04025,obesity_prevalence,2024 release (BRFSS 2022),31.339,cdc_places
+county,04025,hypertension_prevalence,2024 release (BRFSS 2022),37.757,cdc_places
+county,04025,chd_prevalence,2024 release (BRFSS 2022),5.773,cdc_places
+county,04025,copd_prevalence,2024 release (BRFSS 2022),7.171,cdc_places
+county,04025,fair_poor_health_pct,2024 release (BRFSS 2022),21.216,cdc_places
+county,04025,no_checkup_pct,2024 release (BRFSS 2022),30.458,cdc_places
+county,04025,pct_65_plus_disability,2019-2023,39.589,acs5
+county,04025,median_household_income,2019-2023,93965.751,acs5
+county,04025,per_capita_income,2019-2023,32791.162,acs5
+county,04025,poverty_rate_65_plus,2019-2023,15.575,acs5
+county,04025,unemployment_rate,2019-2023,5.871,acs5
+county,04025,median_home_value,2019-2023,389131.252,acs5
+county,04025,median_gross_rent,2019-2023,1396.673,acs5
+county,04025,pct_bachelors_plus,2019-2023,34.815,acs5
+county,04025,pct_hispanic,2019-2023,8.89,acs5
+county,04025,pct_black,2019-2023,9.442,acs5
+county,12057,pop_total,2019-2023,1837863.0,acs5
+county,12057,pop_65_plus,2019-2023,132225.0,acs5
+county,12057,pct_65_plus,2019-2023,14.054,acs5
+county,12057,pop_75_plus,2019-2023,284564.0,acs5
+county,12057,median_age,2019-2023,50.941,acs5
+county,12057,pop_65_plus_growth_5yr,2020-2024,7.612,popest
+county,12057,pop_growth_5yr,2020-2024,8.365,popest
+county,12057,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1105.259,census_geo
+county,12057,pct_65_living_alone,2019-2023,26.05,acs5
+county,12057,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),430856.0,cms_enrollment
+county,12057,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),72666.0,cms_enrollment
+county,12057,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),231409.0,cms_enrollment
+county,12057,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),118251.0,cms_enrollment
+county,12057,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),34.062,cms_enrollment
+county,12057,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),9.643,cms_enrollment
+county,12057,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),8.652,cms_enrollment
+county,12057,avg_hcc_risk_score,2014-2024,1.196,cms_geo_variation
+county,12057,medicare_spend_per_capita_std,2014-2024,13827.818,cms_geo_variation
+county,12057,ed_visits_per_1000,2014-2024,,cms_geo_variation
+county,12057,readmission_rate,2014-2024,15.355,cms_geo_variation
+county,12057,ip_stays_per_1000,2014-2024,232.338,cms_geo_variation
+county,12057,pcp_count,monthly refresh,1413.0,dac_clinicians
+county,12057,pcp_physician_count,monthly refresh,761.0,dac_clinicians
+county,12057,pcp_per_1000_65plus,monthly refresh,6.618,dac_clinicians
+county,12057,pcp_per_10k_pop,monthly refresh,6.791,dac_clinicians
+county,12057,large_group_pcp_share,monthly refresh,59.214,dac_clinicians
+county,12057,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,12057,hpsa_score_max,current designations,7.985,hrsa_hpsa
+county,12057,diabetes_prevalence,2024 release (BRFSS 2022),8.45,cdc_places
+county,12057,obesity_prevalence,2024 release (BRFSS 2022),28.78,cdc_places
+county,12057,hypertension_prevalence,2024 release (BRFSS 2022),29.826,cdc_places
+county,12057,chd_prevalence,2024 release (BRFSS 2022),5.819,cdc_places
+county,12057,copd_prevalence,2024 release (BRFSS 2022),7.805,cdc_places
+county,12057,fair_poor_health_pct,2024 release (BRFSS 2022),20.892,cdc_places
+county,12057,no_checkup_pct,2024 release (BRFSS 2022),27.164,cdc_places
+county,12057,pct_65_plus_disability,2019-2023,34.79,acs5
+county,12057,median_household_income,2019-2023,63478.264,acs5
+county,12057,per_capita_income,2019-2023,57494.468,acs5
+county,12057,poverty_rate_65_plus,2019-2023,12.67,acs5
+county,12057,unemployment_rate,2019-2023,4.454,acs5
+county,12057,median_home_value,2019-2023,241978.607,acs5
+county,12057,median_gross_rent,2019-2023,1719.068,acs5
+county,12057,pct_bachelors_plus,2019-2023,24.753,acs5
+county,12057,pct_hispanic,2019-2023,44.672,acs5
+county,12057,pct_black,2019-2023,12.808,acs5
+county,12103,pop_total,2019-2023,450275.0,acs5
+county,12103,pop_65_plus,2019-2023,301778.0,acs5
+county,12103,pct_65_plus,2019-2023,11.267,acs5
+county,12103,pop_75_plus,2019-2023,,acs5
+county,12103,median_age,2019-2023,44.343,acs5
+county,12103,pop_65_plus_growth_5yr,2020-2024,29.915,popest
+county,12103,pop_growth_5yr,2020-2024,9.873,popest
+county,12103,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1322.057,census_geo
+county,12103,pct_65_living_alone,2019-2023,25.616,acs5
+county,12103,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),199291.0,cms_enrollment
+county,12103,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),138467.0,cms_enrollment
+county,12103,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),115934.0,cms_enrollment
+county,12103,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),402444.0,cms_enrollment
+county,12103,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),36.665,cms_enrollment
+county,12103,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),25.684,cms_enrollment
+county,12103,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),18.136,cms_enrollment
+county,12103,avg_hcc_risk_score,2014-2024,0.899,cms_geo_variation
+county,12103,medicare_spend_per_capita_std,2014-2024,14382.436,cms_geo_variation
+county,12103,ed_visits_per_1000,2014-2024,549.634,cms_geo_variation
+county,12103,readmission_rate,2014-2024,19.08,cms_geo_variation
+county,12103,ip_stays_per_1000,2014-2024,273.527,cms_geo_variation
+county,12103,pcp_count,monthly refresh,2026.0,dac_clinicians
+county,12103,pcp_physician_count,monthly refresh,236.0,dac_clinicians
+county,12103,pcp_per_1000_65plus,monthly refresh,7.422,dac_clinicians
+county,12103,pcp_per_10k_pop,monthly refresh,11.022,dac_clinicians
+county,12103,large_group_pcp_share,monthly refresh,38.122,dac_clinicians
+county,12103,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,12103,hpsa_score_max,current designations,2.256,hrsa_hpsa
+county,12103,diabetes_prevalence,2024 release (BRFSS 2022),12.112,cdc_places
+county,12103,obesity_prevalence,2024 release (BRFSS 2022),28.152,cdc_places
+county,12103,hypertension_prevalence,2024 release (BRFSS 2022),36.315,cdc_places
+county,12103,chd_prevalence,2024 release (BRFSS 2022),4.733,cdc_places
+county,12103,copd_prevalence,2024 release (BRFSS 2022),8.491,cdc_places
+county,12103,fair_poor_health_pct,2024 release (BRFSS 2022),13.055,cdc_places
+county,12103,no_checkup_pct,2024 release (BRFSS 2022),18.386,cdc_places
+county,12103,pct_65_plus_disability,2019-2023,33.31,acs5
+county,12103,median_household_income,2019-2023,91931.921,acs5
+county,12103,per_capita_income,2019-2023,54893.188,acs5
+county,12103,poverty_rate_65_plus,2019-2023,11.987,acs5
+county,12103,unemployment_rate,2019-2023,7.209,acs5
+county,12103,median_home_value,2019-2023,349602.071,acs5
+county,12103,median_gross_rent,2019-2023,1743.157,acs5
+county,12103,pct_bachelors_plus,2019-2023,39.72,acs5
+county,12103,pct_hispanic,2019-2023,47.398,acs5
+county,12103,pct_black,2019-2023,4.339,acs5
+county,12071,pop_total,2019-2023,557504.0,acs5
+county,12071,pop_65_plus,2019-2023,437960.0,acs5
+county,12071,pct_65_plus,2019-2023,26.46,acs5
+county,12071,pop_75_plus,2019-2023,198633.0,acs5
+county,12071,median_age,2019-2023,43.691,acs5
+county,12071,pop_65_plus_growth_5yr,2020-2024,,popest
+county,12071,pop_growth_5yr,2020-2024,9.727,popest
+county,12071,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2608.815,census_geo
+county,12071,pct_65_living_alone,2019-2023,27.845,acs5
+county,12071,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),185464.0,cms_enrollment
+county,12071,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),154741.0,cms_enrollment
+county,12071,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),237590.0,cms_enrollment
+county,12071,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),137424.0,cms_enrollment
+county,12071,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),38.652,cms_enrollment
+county,12071,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),11.192,cms_enrollment
+county,12071,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),10.924,cms_enrollment
+county,12071,avg_hcc_risk_score,2014-2024,1.131,cms_geo_variation
+county,12071,medicare_spend_per_capita_std,2014-2024,11850.389,cms_geo_variation
+county,12071,ed_visits_per_1000,2014-2024,635.361,cms_geo_variation
+county,12071,readmission_rate,2014-2024,18.24,cms_geo_variation
+county,12071,ip_stays_per_1000,2014-2024,252.616,cms_geo_variation
+county,12071,pcp_count,monthly refresh,2969.0,dac_clinicians
+county,12071,pcp_physician_count,monthly refresh,2084.0,dac_clinicians
+county,12071,pcp_per_1000_65plus,monthly refresh,4.599,dac_clinicians
+county,12071,pcp_per_10k_pop,monthly refresh,11.321,dac_clinicians
+county,12071,large_group_pcp_share,monthly refresh,37.923,dac_clinicians
+county,12071,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,12071,hpsa_score_max,current designations,,hrsa_hpsa
+county,12071,diabetes_prevalence,2024 release (BRFSS 2022),9.409,cdc_places
+county,12071,obesity_prevalence,2024 release (BRFSS 2022),30.501,cdc_places
+county,12071,hypertension_prevalence,2024 release (BRFSS 2022),,cdc_places
+county,12071,chd_prevalence,2024 release (BRFSS 2022),6.378,cdc_places
+county,12071,copd_prevalence,2024 release (BRFSS 2022),5.63,cdc_places
+county,12071,fair_poor_health_pct,2024 release (BRFSS 2022),16.367,cdc_places
+county,12071,no_checkup_pct,2024 release (BRFSS 2022),29.953,cdc_places
+county,12071,pct_65_plus_disability,2019-2023,36.62,acs5
+county,12071,median_household_income,2019-2023,98304.019,acs5
+county,12071,per_capita_income,2019-2023,34528.559,acs5
+county,12071,poverty_rate_65_plus,2019-2023,7.064,acs5
+county,12071,unemployment_rate,2019-2023,3.693,acs5
+county,12071,median_home_value,2019-2023,420529.377,acs5
+county,12071,median_gross_rent,2019-2023,976.926,acs5
+county,12071,pct_bachelors_plus,2019-2023,50.892,acs5
+county,12071,pct_hispanic,2019-2023,36.273,acs5
+county,12071,pct_black,2019-2023,16.68,acs5
+county,48453,pop_total,2019-2023,4281533.0,acs5
+county,48453,pop_65_plus,2019-2023,653077.0,acs5
+county,48453,pct_65_plus,2019-2023,29.974,acs5
+county,48453,pop_75_plus,2019-2023,65968.0,acs5
+county,48453,median_age,2019-2023,51.578,acs5
+county,48453,pop_65_plus_growth_5yr,2020-2024,16.826,popest
+county,48453,pop_growth_5yr,2020-2024,9.015,popest
+county,48453,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,3317.614,census_geo
+county,48453,pct_65_living_alone,2019-2023,28.762,acs5
+county,48453,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),742102.0,cms_enrollment
+county,48453,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),318418.0,cms_enrollment
+county,48453,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),325261.0,cms_enrollment
+county,48453,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),425119.0,cms_enrollment
+county,48453,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),32.206,cms_enrollment
+county,48453,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),16.614,cms_enrollment
+county,48453,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),20.8,cms_enrollment
+county,48453,avg_hcc_risk_score,2014-2024,1.232,cms_geo_variation
+county,48453,medicare_spend_per_capita_std,2014-2024,10176.849,cms_geo_variation
+county,48453,ed_visits_per_1000,2014-2024,765.566,cms_geo_variation
+county,48453,readmission_rate,2014-2024,19.08,cms_geo_variation
+county,48453,ip_stays_per_1000,2014-2024,237.098,cms_geo_variation
+county,48453,pcp_count,monthly refresh,2342.0,dac_clinicians
+county,48453,pcp_physician_count,monthly refresh,1860.0,dac_clinicians
+county,48453,pcp_per_1000_65plus,monthly refresh,5.676,dac_clinicians
+county,48453,pcp_per_10k_pop,monthly refresh,4.036,dac_clinicians
+county,48453,large_group_pcp_share,monthly refresh,66.035,dac_clinicians
+county,48453,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,48453,hpsa_score_max,current designations,5.186,hrsa_hpsa
+county,48453,diabetes_prevalence,2024 release (BRFSS 2022),13.845,cdc_places
+county,48453,obesity_prevalence,2024 release (BRFSS 2022),36.102,cdc_places
+county,48453,hypertension_prevalence,2024 release (BRFSS 2022),34.674,cdc_places
+county,48453,chd_prevalence,2024 release (BRFSS 2022),6.798,cdc_places
+county,48453,copd_prevalence,2024 release (BRFSS 2022),,cdc_places
+county,48453,fair_poor_health_pct,2024 release (BRFSS 2022),13.466,cdc_places
+county,48453,no_checkup_pct,2024 release (BRFSS 2022),27.491,cdc_places
+county,48453,pct_65_plus_disability,2019-2023,41.395,acs5
+county,48453,median_household_income,2019-2023,90294.929,acs5
+county,48453,per_capita_income,2019-2023,50793.639,acs5
+county,48453,poverty_rate_65_plus,2019-2023,7.392,acs5
+county,48453,unemployment_rate,2019-2023,5.563,acs5
+county,48453,median_home_value,2019-2023,196884.643,acs5
+county,48453,median_gross_rent,2019-2023,,acs5
+county,48453,pct_bachelors_plus,2019-2023,22.567,acs5
+county,48453,pct_hispanic,2019-2023,13.061,acs5
+county,48453,pct_black,2019-2023,22.371,acs5
+county,48029,pop_total,2019-2023,1243018.0,acs5
+county,48029,pop_65_plus,2019-2023,107748.0,acs5
+county,48029,pct_65_plus,2019-2023,21.195,acs5
+county,48029,pop_75_plus,2019-2023,297826.0,acs5
+county,48029,median_age,2019-2023,41.739,acs5
+county,48029,pop_65_plus_growth_5yr,2020-2024,24.762,popest
+county,48029,pop_growth_5yr,2020-2024,,popest
+county,48029,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2717.406,census_geo
+county,48029,pct_65_living_alone,2019-2023,25.188,acs5
+county,48029,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),787011.0,cms_enrollment
+county,48029,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),448995.0,cms_enrollment
+county,48029,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),222919.0,cms_enrollment
+county,48029,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),226950.0,cms_enrollment
+county,48029,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),58.13,cms_enrollment
+county,48029,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),18.154,cms_enrollment
+county,48029,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),9.015,cms_enrollment
+county,48029,avg_hcc_risk_score,2014-2024,0.99,cms_geo_variation
+county,48029,medicare_spend_per_capita_std,2014-2024,12775.596,cms_geo_variation
+county,48029,ed_visits_per_1000,2014-2024,732.74,cms_geo_variation
+county,48029,readmission_rate,2014-2024,18.819,cms_geo_variation
+county,48029,ip_stays_per_1000,2014-2024,306.71,cms_geo_variation
+county,48029,pcp_count,monthly refresh,2781.0,dac_clinicians
+county,48029,pcp_physician_count,monthly refresh,980.0,dac_clinicians
+county,48029,pcp_per_1000_65plus,monthly refresh,7.366,dac_clinicians
+county,48029,pcp_per_10k_pop,monthly refresh,10.7,dac_clinicians
+county,48029,large_group_pcp_share,monthly refresh,55.538,dac_clinicians
+county,48029,hpsa_primary_care_flag,current designations,,hrsa_hpsa
+county,48029,hpsa_score_max,current designations,10.746,hrsa_hpsa
+county,48029,diabetes_prevalence,2024 release (BRFSS 2022),10.24,cdc_places
+county,48029,obesity_prevalence,2024 release (BRFSS 2022),33.021,cdc_places
+county,48029,hypertension_prevalence,2024 release (BRFSS 2022),37.212,cdc_places
+county,48029,chd_prevalence,2024 release (BRFSS 2022),8.029,cdc_places
+county,48029,copd_prevalence,2024 release (BRFSS 2022),6.333,cdc_places
+county,48029,fair_poor_health_pct,2024 release (BRFSS 2022),20.955,cdc_places
+county,48029,no_checkup_pct,2024 release (BRFSS 2022),23.722,cdc_places
+county,48029,pct_65_plus_disability,2019-2023,39.933,acs5
+county,48029,median_household_income,2019-2023,87444.382,acs5
+county,48029,per_capita_income,2019-2023,53279.663,acs5
+county,48029,poverty_rate_65_plus,2019-2023,15.046,acs5
+county,48029,unemployment_rate,2019-2023,7.469,acs5
+county,48029,median_home_value,2019-2023,394620.411,acs5
+county,48029,median_gross_rent,2019-2023,1208.404,acs5
+county,48029,pct_bachelors_plus,2019-2023,49.431,acs5
+county,48029,pct_hispanic,2019-2023,34.634,acs5
+county,48029,pct_black,2019-2023,28.751,acs5
+county,37183,pop_total,2019-2023,2177767.0,acs5
+county,37183,pop_65_plus,2019-2023,398458.0,acs5
+county,37183,pct_65_plus,2019-2023,23.244,acs5
+county,37183,pop_75_plus,2019-2023,158013.0,acs5
+county,37183,median_age,2019-2023,37.066,acs5
+county,37183,pop_65_plus_growth_5yr,2020-2024,26.385,popest
+county,37183,pop_growth_5yr,2020-2024,4.048,popest
+county,37183,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1664.665,census_geo
+county,37183,pct_65_living_alone,2019-2023,22.187,acs5
+county,37183,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),452845.0,cms_enrollment
+county,37183,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),289993.0,cms_enrollment
+county,37183,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),399261.0,cms_enrollment
+county,37183,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),67491.0,cms_enrollment
+county,37183,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),50.548,cms_enrollment
+county,37183,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),17.383,cms_enrollment
+county,37183,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),21.759,cms_enrollment
+county,37183,avg_hcc_risk_score,2014-2024,1.142,cms_geo_variation
+county,37183,medicare_spend_per_capita_std,2014-2024,11167.657,cms_geo_variation
+county,37183,ed_visits_per_1000,2014-2024,612.049,cms_geo_variation
+county,37183,readmission_rate,2014-2024,18.138,cms_geo_variation
+county,37183,ip_stays_per_1000,2014-2024,329.95,cms_geo_variation
+county,37183,pcp_count,monthly refresh,1542.0,dac_clinicians
+county,37183,pcp_physician_count,monthly refresh,2481.0,dac_clinicians
+county,37183,pcp_per_1000_65plus,monthly refresh,6.53,dac_clinicians
+county,37183,pcp_per_10k_pop,monthly refresh,6.944,dac_clinicians
+county,37183,large_group_pcp_share,monthly refresh,28.249,dac_clinicians
+county,37183,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,37183,hpsa_score_max,current designations,10.276,hrsa_hpsa
+county,37183,diabetes_prevalence,2024 release (BRFSS 2022),8.37,cdc_places
+county,37183,obesity_prevalence,2024 release (BRFSS 2022),30.032,cdc_places
+county,37183,hypertension_prevalence,2024 release (BRFSS 2022),26.191,cdc_places
+county,37183,chd_prevalence,2024 release (BRFSS 2022),6.522,cdc_places
+county,37183,copd_prevalence,2024 release (BRFSS 2022),4.779,cdc_places
+county,37183,fair_poor_health_pct,2024 release (BRFSS 2022),13.188,cdc_places
+county,37183,no_checkup_pct,2024 release (BRFSS 2022),19.458,cdc_places
+county,37183,pct_65_plus_disability,2019-2023,37.86,acs5
+county,37183,median_household_income,2019-2023,96584.277,acs5
+county,37183,per_capita_income,2019-2023,54902.145,acs5
+county,37183,poverty_rate_65_plus,2019-2023,9.218,acs5
+county,37183,unemployment_rate,2019-2023,5.94,acs5
+county,37183,median_home_value,2019-2023,263113.147,acs5
+county,37183,median_gross_rent,2019-2023,1320.472,acs5
+county,37183,pct_bachelors_plus,2019-2023,41.52,acs5
+county,37183,pct_hispanic,2019-2023,9.483,acs5
+county,37183,pct_black,2019-2023,27.043,acs5
+county,32003,pop_total,2019-2023,4125851.0,acs5
+county,32003,pop_65_plus,2019-2023,323811.0,acs5
+county,32003,pct_65_plus,2019-2023,18.204,acs5
+county,32003,pop_75_plus,2019-2023,211264.0,acs5
+county,32003,median_age,2019-2023,41.629,acs5
+county,32003,pop_65_plus_growth_5yr,2020-2024,5.806,popest
+county,32003,pop_growth_5yr,2020-2024,0.959,popest
+county,32003,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,657.864,census_geo
+county,32003,pct_65_living_alone,2019-2023,22.671,acs5
+county,32003,medicare_benes_total,2013-2026 (monthly; annual rows MONTH=Year),725433.0,cms_enrollment
+county,32003,medicare_benes_aged,2013-2026 (monthly; annual rows MONTH=Year),554882.0,cms_enrollment
+county,32003,original_medicare_benes,2013-2026 (monthly; annual rows MONTH=Year),358112.0,cms_enrollment
+county,32003,medicare_ma_benes,2013-2026 (monthly; annual rows MONTH=Year),58763.0,cms_enrollment
+county,32003,ma_penetration_pct,2013-2026 (monthly; annual rows MONTH=Year),53.446,cms_enrollment
+county,32003,dual_eligible_pct,2013-2026 (monthly; annual rows MONTH=Year),24.045,cms_enrollment
+county,32003,medicare_benes_growth_5yr,2013-2026 (monthly; annual rows MONTH=Year),20.139,cms_enrollment
+county,32003,avg_hcc_risk_score,2014-2024,1.134,cms_geo_variation
+county,32003,medicare_spend_per_capita_std,2014-2024,11282.052,cms_geo_variation
+county,32003,ed_visits_per_1000,2014-2024,813.503,cms_geo_variation
+county,32003,readmission_rate,2014-2024,17.032,cms_geo_variation
+county,32003,ip_stays_per_1000,2014-2024,271.697,cms_geo_variation
+county,32003,pcp_count,monthly refresh,629.0,dac_clinicians
+county,32003,pcp_physician_count,monthly refresh,517.0,dac_clinicians
+county,32003,pcp_per_1000_65plus,monthly refresh,6.337,dac_clinicians
+county,32003,pcp_per_10k_pop,monthly refresh,8.751,dac_clinicians
+county,32003,large_group_pcp_share,monthly refresh,45.506,dac_clinicians
+county,32003,hpsa_primary_care_flag,current designations,0.0,hrsa_hpsa
+county,32003,hpsa_score_max,current designations,11.441,hrsa_hpsa
+county,32003,diabetes_prevalence,2024 release (BRFSS 2022),14.364,cdc_places
+county,32003,obesity_prevalence,2024 release (BRFSS 2022),27.89,cdc_places
+county,32003,hypertension_prevalence,2024 release (BRFSS 2022),34.188,cdc_places
+county,32003,chd_prevalence,2024 release (BRFSS 2022),5.576,cdc_places
+county,32003,copd_prevalence,2024 release (BRFSS 2022),5.802,cdc_places
+county,32003,fair_poor_health_pct,2024 release (BRFSS 2022),15.97,cdc_places
+county,32003,no_checkup_pct,2024 release (BRFSS 2022),19.188,cdc_places
+county,32003,pct_65_plus_disability,2019-2023,35.153,acs5
+county,32003,median_household_income,2019-2023,57344.389,acs5
+county,32003,per_capita_income,2019-2023,52270.532,acs5
+county,32003,poverty_rate_65_plus,2019-2023,10.795,acs5
+county,32003,unemployment_rate,2019-2023,4.676,acs5
+county,32003,median_home_value,2019-2023,190981.791,acs5
+county,32003,median_gross_rent,2019-2023,1459.417,acs5
+county,32003,pct_bachelors_plus,2019-2023,51.131,acs5
+county,32003,pct_hispanic,2019-2023,39.288,acs5
+county,32003,pct_black,2019-2023,28.91,acs5
+zcta,85004,pop_total,2019-2023,1901566.0,acs5
+zcta,85004,pop_65_plus,2019-2023,319530.0,acs5
+zcta,85004,pct_65_plus,2019-2023,28.341,acs5
+zcta,85004,pop_75_plus,2019-2023,219540.0,acs5
+zcta,85004,median_age,2019-2023,46.06,acs5
+zcta,85004,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,439.086,census_geo
+zcta,85004,pct_65_living_alone,2019-2023,32.388,acs5
+zcta,85004,pcp_count,monthly refresh,3436.0,dac_clinicians
+zcta,85004,pcp_physician_count,monthly refresh,1857.0,dac_clinicians
+zcta,85004,pcp_per_1000_65plus,monthly refresh,6.728,dac_clinicians
+zcta,85004,pcp_per_10k_pop,monthly refresh,4.72,dac_clinicians
+zcta,85004,large_group_pcp_share,monthly refresh,28.109,dac_clinicians
+zcta,85004,pct_65_plus_disability,2019-2023,33.082,acs5
+zcta,85004,median_household_income,2019-2023,94366.955,acs5
+zcta,85004,per_capita_income,2019-2023,36289.277,acs5
+zcta,85004,poverty_rate_65_plus,2019-2023,6.944,acs5
+zcta,85004,unemployment_rate,2019-2023,4.068,acs5
+zcta,85004,median_home_value,2019-2023,291183.55,acs5
+zcta,85004,median_gross_rent,2019-2023,1133.885,acs5
+zcta,85004,pct_bachelors_plus,2019-2023,48.131,acs5
+zcta,85004,pct_hispanic,2019-2023,25.054,acs5
+zcta,85004,pct_black,2019-2023,29.149,acs5
+zcta,85008,pop_total,2019-2023,1526453.0,acs5
+zcta,85008,pop_65_plus,2019-2023,202679.0,acs5
+zcta,85008,pct_65_plus,2019-2023,21.509,acs5
+zcta,85008,pop_75_plus,2019-2023,324596.0,acs5
+zcta,85008,median_age,2019-2023,35.275,acs5
+zcta,85008,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2924.39,census_geo
+zcta,85008,pct_65_living_alone,2019-2023,29.809,acs5
+zcta,85008,pcp_count,monthly refresh,2851.0,dac_clinicians
+zcta,85008,pcp_physician_count,monthly refresh,2264.0,dac_clinicians
+zcta,85008,pcp_per_1000_65plus,monthly refresh,6.973,dac_clinicians
+zcta,85008,pcp_per_10k_pop,monthly refresh,7.618,dac_clinicians
+zcta,85008,large_group_pcp_share,monthly refresh,40.651,dac_clinicians
+zcta,85008,pct_65_plus_disability,2019-2023,38.041,acs5
+zcta,85008,median_household_income,2019-2023,70701.213,acs5
+zcta,85008,per_capita_income,2019-2023,49810.436,acs5
+zcta,85008,poverty_rate_65_plus,2019-2023,10.863,acs5
+zcta,85008,unemployment_rate,2019-2023,4.99,acs5
+zcta,85008,median_home_value,2019-2023,368981.834,acs5
+zcta,85008,median_gross_rent,2019-2023,1025.224,acs5
+zcta,85008,pct_bachelors_plus,2019-2023,35.508,acs5
+zcta,85008,pct_hispanic,2019-2023,48.882,acs5
+zcta,85008,pct_black,2019-2023,9.488,acs5
+zcta,85281,pop_total,2019-2023,,acs5
+zcta,85281,pop_65_plus,2019-2023,756219.0,acs5
+zcta,85281,pct_65_plus,2019-2023,12.093,acs5
+zcta,85281,pop_75_plus,2019-2023,320425.0,acs5
+zcta,85281,median_age,2019-2023,36.592,acs5
+zcta,85281,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,588.719,census_geo
+zcta,85281,pct_65_living_alone,2019-2023,23.988,acs5
+zcta,85281,pcp_count,monthly refresh,2377.0,dac_clinicians
+zcta,85281,pcp_physician_count,monthly refresh,322.0,dac_clinicians
+zcta,85281,pcp_per_1000_65plus,monthly refresh,5.658,dac_clinicians
+zcta,85281,pcp_per_10k_pop,monthly refresh,6.453,dac_clinicians
+zcta,85281,large_group_pcp_share,monthly refresh,28.633,dac_clinicians
+zcta,85281,pct_65_plus_disability,2019-2023,40.218,acs5
+zcta,85281,median_household_income,2019-2023,86103.141,acs5
+zcta,85281,per_capita_income,2019-2023,48113.506,acs5
+zcta,85281,poverty_rate_65_plus,2019-2023,10.424,acs5
+zcta,85281,unemployment_rate,2019-2023,6.607,acs5
+zcta,85281,median_home_value,2019-2023,450631.904,acs5
+zcta,85281,median_gross_rent,2019-2023,1184.215,acs5
+zcta,85281,pct_bachelors_plus,2019-2023,45.034,acs5
+zcta,85281,pct_hispanic,2019-2023,51.273,acs5
+zcta,85281,pct_black,2019-2023,20.854,acs5
+zcta,85701,pop_total,2019-2023,1942861.0,acs5
+zcta,85701,pop_65_plus,2019-2023,697567.0,acs5
+zcta,85701,pct_65_plus,2019-2023,27.876,acs5
+zcta,85701,pop_75_plus,2019-2023,162648.0,acs5
+zcta,85701,median_age,2019-2023,37.692,acs5
+zcta,85701,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,663.3,census_geo
+zcta,85701,pct_65_living_alone,2019-2023,24.936,acs5
+zcta,85701,pcp_count,monthly refresh,3430.0,dac_clinicians
+zcta,85701,pcp_physician_count,monthly refresh,1594.0,dac_clinicians
+zcta,85701,pcp_per_1000_65plus,monthly refresh,3.509,dac_clinicians
+zcta,85701,pcp_per_10k_pop,monthly refresh,5.35,dac_clinicians
+zcta,85701,large_group_pcp_share,monthly refresh,43.43,dac_clinicians
+zcta,85701,pct_65_plus_disability,2019-2023,31.946,acs5
+zcta,85701,median_household_income,2019-2023,80613.709,acs5
+zcta,85701,per_capita_income,2019-2023,31334.912,acs5
+zcta,85701,poverty_rate_65_plus,2019-2023,6.5,acs5
+zcta,85701,unemployment_rate,2019-2023,,acs5
+zcta,85701,median_home_value,2019-2023,328498.019,acs5
+zcta,85701,median_gross_rent,2019-2023,1695.631,acs5
+zcta,85701,pct_bachelors_plus,2019-2023,40.737,acs5
+zcta,85701,pct_hispanic,2019-2023,54.091,acs5
+zcta,85701,pct_black,2019-2023,21.715,acs5
+zcta,33602,pop_total,2019-2023,3247597.0,acs5
+zcta,33602,pop_65_plus,2019-2023,581925.0,acs5
+zcta,33602,pct_65_plus,2019-2023,20.389,acs5
+zcta,33602,pop_75_plus,2019-2023,113560.0,acs5
+zcta,33602,median_age,2019-2023,41.228,acs5
+zcta,33602,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1260.927,census_geo
+zcta,33602,pct_65_living_alone,2019-2023,30.43,acs5
+zcta,33602,pcp_count,monthly refresh,872.0,dac_clinicians
+zcta,33602,pcp_physician_count,monthly refresh,2231.0,dac_clinicians
+zcta,33602,pcp_per_1000_65plus,monthly refresh,5.339,dac_clinicians
+zcta,33602,pcp_per_10k_pop,monthly refresh,6.784,dac_clinicians
+zcta,33602,large_group_pcp_share,monthly refresh,29.776,dac_clinicians
+zcta,33602,pct_65_plus_disability,2019-2023,34.748,acs5
+zcta,33602,median_household_income,2019-2023,98092.169,acs5
+zcta,33602,per_capita_income,2019-2023,52106.015,acs5
+zcta,33602,poverty_rate_65_plus,2019-2023,11.883,acs5
+zcta,33602,unemployment_rate,2019-2023,4.811,acs5
+zcta,33602,median_home_value,2019-2023,245502.955,acs5
+zcta,33602,median_gross_rent,2019-2023,1779.719,acs5
+zcta,33602,pct_bachelors_plus,2019-2023,28.107,acs5
+zcta,33602,pct_hispanic,2019-2023,52.932,acs5
+zcta,33602,pct_black,2019-2023,24.4,acs5
+zcta,78701,pop_total,2019-2023,2363333.0,acs5
+zcta,78701,pop_65_plus,2019-2023,278173.0,acs5
+zcta,78701,pct_65_plus,2019-2023,21.39,acs5
+zcta,78701,pop_75_plus,2019-2023,219256.0,acs5
+zcta,78701,median_age,2019-2023,44.479,acs5
+zcta,78701,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2421.975,census_geo
+zcta,78701,pct_65_living_alone,2019-2023,22.224,acs5
+zcta,78701,pcp_count,monthly refresh,1053.0,dac_clinicians
+zcta,78701,pcp_physician_count,monthly refresh,1153.0,dac_clinicians
+zcta,78701,pcp_per_1000_65plus,monthly refresh,3.371,dac_clinicians
+zcta,78701,pcp_per_10k_pop,monthly refresh,5.107,dac_clinicians
+zcta,78701,large_group_pcp_share,monthly refresh,33.993,dac_clinicians
+zcta,78701,pct_65_plus_disability,2019-2023,40.889,acs5
+zcta,78701,median_household_income,2019-2023,74877.593,acs5
+zcta,78701,per_capita_income,2019-2023,55330.121,acs5
+zcta,78701,poverty_rate_65_plus,2019-2023,8.323,acs5
+zcta,78701,unemployment_rate,2019-2023,7.297,acs5
+zcta,78701,median_home_value,2019-2023,449864.405,acs5
+zcta,78701,median_gross_rent,2019-2023,1677.378,acs5
+zcta,78701,pct_bachelors_plus,2019-2023,32.338,acs5
+zcta,78701,pct_hispanic,2019-2023,46.359,acs5
+zcta,78701,pct_black,2019-2023,4.192,acs5
+place,0455000,pop_total,2019-2023,879119.0,acs5
+place,0455000,pop_65_plus,2019-2023,448243.0,acs5
+place,0455000,pct_65_plus,2019-2023,30.595,acs5
+place,0455000,pop_75_plus,2019-2023,,acs5
+place,0455000,median_age,2019-2023,50.459,acs5
+place,0455000,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1461.335,census_geo
+place,0455000,pct_65_living_alone,2019-2023,28.612,acs5
+place,0455000,pct_65_plus_disability,2019-2023,39.208,acs5
+place,0455000,median_household_income,2019-2023,86233.649,acs5
+place,0455000,per_capita_income,2019-2023,37595.514,acs5
+place,0455000,poverty_rate_65_plus,2019-2023,7.143,acs5
+place,0455000,unemployment_rate,2019-2023,4.207,acs5
+place,0455000,median_home_value,2019-2023,258388.706,acs5
+place,0455000,median_gross_rent,2019-2023,1456.86,acs5
+place,0455000,pct_bachelors_plus,2019-2023,42.811,acs5
+place,0455000,pct_hispanic,2019-2023,21.08,acs5
+place,0455000,pct_black,2019-2023,25.82,acs5
+place,0477000,pop_total,2019-2023,1819590.0,acs5
+place,0477000,pop_65_plus,2019-2023,425072.0,acs5
+place,0477000,pct_65_plus,2019-2023,24.602,acs5
+place,0477000,pop_75_plus,2019-2023,67462.0,acs5
+place,0477000,median_age,2019-2023,35.024,acs5
+place,0477000,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2976.554,census_geo
+place,0477000,pct_65_living_alone,2019-2023,23.214,acs5
+place,0477000,pct_65_plus_disability,2019-2023,40.002,acs5
+place,0477000,median_household_income,2019-2023,101656.481,acs5
+place,0477000,per_capita_income,2019-2023,44214.84,acs5
+place,0477000,poverty_rate_65_plus,2019-2023,9.469,acs5
+place,0477000,unemployment_rate,2019-2023,5.024,acs5
+place,0477000,median_home_value,2019-2023,231551.809,acs5
+place,0477000,median_gross_rent,2019-2023,1277.531,acs5
+place,0477000,pct_bachelors_plus,2019-2023,33.266,acs5
+place,0477000,pct_hispanic,2019-2023,12.547,acs5
+place,0477000,pct_black,2019-2023,29.808,acs5
+place,1271000,pop_total,2019-2023,3304703.0,acs5
+place,1271000,pop_65_plus,2019-2023,719306.0,acs5
+place,1271000,pct_65_plus,2019-2023,21.972,acs5
+place,1271000,pop_75_plus,2019-2023,259128.0,acs5
+place,1271000,median_age,2019-2023,50.715,acs5
+place,1271000,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,1183.095,census_geo
+place,1271000,pct_65_living_alone,2019-2023,31.533,acs5
+place,1271000,pct_65_plus_disability,2019-2023,37.398,acs5
+place,1271000,median_household_income,2019-2023,96630.698,acs5
+place,1271000,per_capita_income,2019-2023,,acs5
+place,1271000,poverty_rate_65_plus,2019-2023,9.774,acs5
+place,1271000,unemployment_rate,2019-2023,7.061,acs5
+place,1271000,median_home_value,2019-2023,188089.163,acs5
+place,1271000,median_gross_rent,2019-2023,1199.483,acs5
+place,1271000,pct_bachelors_plus,2019-2023,33.394,acs5
+place,1271000,pct_hispanic,2019-2023,29.874,acs5
+place,1271000,pct_black,2019-2023,2.797,acs5
+place,4805000,pop_total,2019-2023,2815675.0,acs5
+place,4805000,pop_65_plus,2019-2023,277468.0,acs5
+place,4805000,pct_65_plus,2019-2023,27.578,acs5
+place,4805000,pop_75_plus,2019-2023,273677.0,acs5
+place,4805000,median_age,2019-2023,48.421,acs5
+place,4805000,pop_density,2023 gazetteer / 2020 relationships / 2023 boundaries,2177.621,census_geo
+place,4805000,pct_65_living_alone,2019-2023,29.5,acs5
+place,4805000,pct_65_plus_disability,2019-2023,33.476,acs5
+place,4805000,median_household_income,2019-2023,90056.963,acs5
+place,4805000,per_capita_income,2019-2023,28345.821,acs5
+place,4805000,poverty_rate_65_plus,2019-2023,9.497,acs5
+place,4805000,unemployment_rate,2019-2023,7.863,acs5
+place,4805000,median_home_value,2019-2023,408416.687,acs5
+place,4805000,median_gross_rent,2019-2023,1369.874,acs5
+place,4805000,pct_bachelors_plus,2019-2023,24.115,acs5
+place,4805000,pct_hispanic,2019-2023,21.518,acs5
+place,4805000,pct_black,2019-2023,16.649,acs5
