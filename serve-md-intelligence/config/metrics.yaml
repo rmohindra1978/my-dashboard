@@ -38,13 +38,14 @@ sources:
     url: https://data.cms.gov/data-api/v1/dataset/6219697b-8f6c-4164-bed4-cd9317c58ebc/data
     vintage: "2014-2024"
     geo_levels: [state, county]
-    notes: Original Medicare (FFS) beneficiaries. Suppressed cells (*) become null.
+    notes: Original Medicare (FFS) beneficiaries, BENE_AGE_LVL = 'All'. Suppressed cells (*) become null. The 2014-2024 release no longer carries BENE_AVG_RISK_SCRE, so avg_hcc_risk_score is null until CMS restores the column.
   cms_enrollment:
     name: Medicare Monthly Enrollment
     publisher: Centers for Medicare & Medicaid Services
     url: https://data.cms.gov/data-api/v1/dataset/d7fabe1e-d19b-4333-9eff-e80e0643f2fd/data
     vintage: "2013-2026 (monthly; annual rows MONTH=Year)"
     geo_levels: [state, county]
+    notes: Annual-average rows only (MONTH = 'Year'); the latest YEAR with annual rows is used. County id = BENE_FIPS_CD; 'Unknown' (xx999) counties and territories are dropped.
   dac_clinicians:
     name: Doctors and Clinicians National Downloadable File
     publisher: Centers for Medicare & Medicaid Services
@@ -227,7 +228,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county]
     source: cms_enrollment
-    derivation: MA_AND_OTH_BENES / TOT_BENES
+    derivation: MA_AND_OTH_BENES / TOT_BENES * 100
     scoring_default: 15
   - id: dual_eligible_pct
     label: Dual-eligible share
@@ -238,7 +239,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county]
     source: cms_enrollment
-    derivation: DUAL_TOT_BENES / TOT_BENES
+    derivation: DUAL_TOT_BENES / TOT_BENES * 100
     scoring_default: 10
   - id: medicare_benes_growth_5yr
     label: Beneficiary growth (5 yr)
@@ -249,7 +250,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county]
     source: cms_enrollment
-    derivation: TOT_BENES[latest] / TOT_BENES[latest-5] - 1
+    derivation: (TOT_BENES[YEAR] / TOT_BENES[YEAR-5] - 1) * 100, annual rows
     scoring_default: 10
   - id: avg_hcc_risk_score
     label: Avg HCC risk score
@@ -260,7 +261,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county]
     source: cms_geo_variation
-    derivation: BENE_AVG_RISK_SCRE, latest YEAR, BENE_AGE_LVL = 'All'
+    derivation: BENE_AVG_RISK_SCRE, latest YEAR, BENE_AGE_LVL = 'All' (column absent from the current release; emitted when present)
     scoring_default: 15
   - id: medicare_spend_per_capita_std
     label: Standardized spend per beneficiary
@@ -293,7 +294,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county]
     source: cms_geo_variation
-    derivation: ACUTE_HOSP_READMSN_PCT
+    derivation: ACUTE_HOSP_READMSN_PCT * 100 (source is a 0-1 fraction)
     scoring_default: 0
   - id: ip_stays_per_1000
     label: Inpatient stays per 1,000

@@ -48,6 +48,16 @@ HRSA / CDC < 1 min.
   (≈ 53 k rows); with geography loaded it writes ≈ 110 k rows (33.6 k ZCTAs + 3.1 k counties × 3
   metrics).
 
+Measured (Sept 2026, cold cache):
+
+| source | download | raw size | rows loaded | wall time |
+|---|---|---|---|---|
+| `cms_enrollment` | data.cms.gov data API, paginated JSON (5,000 rows/page, projected columns, `filter[MONTH]=Year`), one file per year x geo level (2013–2025) | ≈ 9.3 MB, 26 files | 274,622 metric rows (51 states, 3,144 counties) | ≈ 30 s |
+| `cms_geo_variation` | same API, `filter[BENE_AGE_LVL]=All`, one file per year x geo level (2014–2024) | ≈ 8.0 MB, 22 files | 140,452 metric rows (51 states, 3,141 counties) | ≈ 20 s |
+
+The CMS data API is keyless; both loaders probe successive `YEAR`s until the API returns an empty
+page, so a new CMS release is picked up by simply re-running (cached years are not re-fetched).
+
 ## Production-style single process
 
 ```bash

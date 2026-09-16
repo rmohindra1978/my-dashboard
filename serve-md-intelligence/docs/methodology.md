@@ -55,6 +55,21 @@ For a geography level `L` (county, ZCTA, place, state) and a score configuration
 - ZCTA and place scores use the metrics available at that level (ACS, clinician file);
   county-only CMS metrics are shown from the parent county on the profile but do not enter the
   sub-county score unless a future loader allocates them via the crosswalk.
+- CMS Medicare enrollment (`cms_enrollment`) uses the annual-average rows (`MONTH = 'Year'`) of
+  the Monthly Enrollment file, never a single month. `ma_penetration_pct` and `dual_eligible_pct`
+  are computed within the same row (`MA_AND_OTH_BENES / TOT_BENES`, `DUAL_TOT_BENES / TOT_BENES`,
+  in percent); `medicare_benes_growth_5yr` compares `TOT_BENES` for a year with the same county
+  five years earlier (2025 vs 2020) and is only emitted where both years exist, so counties whose
+  FIPS changed (e.g. Connecticut planning regions) have no growth value. Every year since 2013
+  is stored so `/history/medicare_benes_total` returns the full series; the profile uses the
+  latest year. `MA_AND_OTH_BENES` includes the small "other" (cost/PACE) plans, as CMS publishes it.
+- CMS Geographic Variation (`cms_geo_variation`) uses the `BENE_AGE_LVL = 'All'` rows for
+  Original Medicare (FFS) beneficiaries; the profile uses the latest year (2024), all years since
+  2014 are stored. `readmission_rate` is scaled from the file's 0-1 fraction to percent. The
+  2014-2024 release no longer publishes `BENE_AVG_RISK_SCRE`, so `avg_hcc_risk_score` stays null
+  (the loader emits it automatically if CMS restores the column).
+- Territories (PR, VI, GU, AS, MP), "Unknown"/"Foreign" counties (`xx999`) and national rows are
+  dropped from all CMS loaders; only the 50 states + DC and their counties are loaded.
 
 ## Provider supply (`dac_clinicians`)
 
@@ -99,5 +114,7 @@ can be regenerated. Unsaved edits are applied live and clearly labelled.
 - Public data lags 1–3 years; vintages are shown on each profile.
 - Cross-source denominators differ (ACS 5-year vs PEP vs CMS enrollment); ratios are computed
   within a single source wherever possible and documented in the data dictionary derivation.
+- CMS suppresses small cells (`*`, typically counties with < 11 beneficiaries in a category);
+  these are stored as NULL and never imputed, so a few rural counties lack utilisation metrics.
 - Percentile scoring compresses real differences at the extremes; use `minmax` or `zscore` when
   absolute spread matters.
