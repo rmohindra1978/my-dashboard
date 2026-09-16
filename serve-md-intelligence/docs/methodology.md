@@ -56,6 +56,38 @@ For a geography level `L` (county, ZCTA, place, state) and a score configuration
   county-only CMS metrics are shown from the parent county on the profile but do not enter the
   sub-county score unless a future loader allocates them via the crosswalk.
 
+## Provider supply (`dac_clinicians`)
+
+Primary-care supply comes from the CMS Doctors & Clinicians National Downloadable File (one row
+per clinician × enrollment × group × practice address). A **PCP** is any clinician whose
+`pri_spec` is INTERNAL MEDICINE, FAMILY PRACTICE, GENERAL PRACTICE, GERIATRIC MEDICINE, NURSE
+PRACTITIONER or PHYSICIAN ASSISTANT (`pcp_count`); `pcp_physician_count` keeps the first four
+only. NPs and PAs are counted as PCPs regardless of the setting they work in, so `pcp_count`
+overstates panel-carrying primary care in specialty-heavy markets – compare it with the
+physician-only count.
+
+- **Geography.** The 5-digit practice ZIP is treated as the ZCTA (ZIP == ZCTA assumption).
+  ZIPs that are not in the Census ZCTA universe (PO boxes and single-institution ZIPs such as
+  44195 Cleveland Clinic or 76508 Baylor Scott & White Temple) are dropped – about 2 % of PCP
+  location rows – so supply near large academic medical centres is understated until a
+  ZIP→ZCTA crosswalk (HUD USPS / UDS Mapper) is added. County values are aggregated from ZCTAs
+  through `geo_crosswalk` (ZCTA→county weights); when the crosswalk is empty only ZCTA rows
+  are emitted.
+- **Distinct clinicians.** An NPI is counted once per ZCTA and once per county however many
+  addresses or groups it has there. A clinician practising in several ZCTAs / counties is
+  counted in each. Split ZCTAs contribute their crosswalk weight (max weight when the clinician
+  has several ZCTAs in the county), so county counts are rounded weighted sums.
+- **Practice location ≠ service area.** The address is where the clinician bills from, not
+  where patients live; large groups sometimes list every clinician at one administrative ZIP,
+  which inflates that ZCTA and deflates neighbours. Use ZCTA counts as a proxy and prefer
+  county-level ratios for site decisions.
+- **Large-group share.** `large_group_pcp_share` = PCPs with `num_org_mem >= 50` (suppressed or
+  missing group size counts as *not* large) divided by `pcp_count`; NULL where there are no PCPs.
+  The per-1,000-seniors / per-10k-population ratios are produced by the derived-metrics step
+  from `pcp_count` and ACS population, not by this loader.
+- **Vintage.** The file is refreshed roughly monthly; `period` is the release month
+  (`YYYY-MM`) from the CMS metastore.
+
 ## Versioning and reproducibility
 
 Saving a configuration in the Score Editor creates a new immutable version (`id`, `version`,

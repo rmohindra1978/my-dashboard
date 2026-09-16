@@ -30,7 +30,23 @@ recorded in `pipeline_runs` (status, rows, vintage, error). Failed sources do no
 others; `market_features` is rebuilt after every successful load.
 
 Expected order of magnitude on a laptop: Census geography + ACS ≈ 5–10 min (large files), CMS
-enrollment / geographic variation ≈ 2 min, clinician file ≈ 3 min (2.5 M rows), HRSA / CDC < 1 min.
+enrollment / geographic variation ≈ 2 min, clinician file ≈ 1 min after download (3.4 M rows),
+HRSA / CDC < 1 min.
+
+### `dac_clinicians` (CMS Doctors & Clinicians)
+
+- Resolves the current CSV URL from the CMS metastore
+  (`.../metastore/schemas/dataset/items/mj5m-pzi6`) and caches
+  `data/raw/dac_clinicians/DAC_NationalDownloadableFile_<released>.csv` (≈ 840 MB, 3.39 M rows,
+  Sept-2026 release) plus `metadata_<released>.json`. A new CMS release means a new file; delete
+  old ones to reclaim disk. If the metastore is unreachable the newest cached metadata is reused.
+- Streams the CSV with pyarrow in 32 MB blocks and keeps only the 5 needed columns of
+  primary-care rows: ≈ 20 s transform + load, peak RSS ≈ 1.2 GB. `--sample` limits it to AZ + TX.
+- Run it **after** `census_geo`: county rows need ZCTA→county weights in `geo_crosswalk`, and the
+  ZCTA universe in `geo_units` is used to drop non-ZCTA ZIPs and to emit zero rows for ZCTAs /
+  counties without PCPs. With an empty crosswalk it logs a warning and loads ZCTA rows only
+  (≈ 53 k rows); with geography loaded it writes ≈ 110 k rows (33.6 k ZCTAs + 3.1 k counties × 3
+  metrics).
 
 ## Production-style single process
 
