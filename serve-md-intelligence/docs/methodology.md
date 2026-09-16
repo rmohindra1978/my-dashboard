@@ -49,7 +49,7 @@ For a geography level `L` (county, ZCTA, place, state) and a score configuration
   needs a large enough addressable population to fill a clinic panel. Density-style metrics
   (PCPs per 1,000 seniors) capture under-supply and are *lower-is-better*.
 - Rates from CDC PLACES are age-adjusted model-based estimates; they are used to express need,
-  not clinical risk.
+  not clinical risk. See *Health Need metrics* below.
 - Informational metrics (`higher_is_better: null`, e.g. race / ethnicity shares) are shown on
   the profile but can never be weighted.
 - ZCTA and place scores use the metrics available at that level (ACS, clinician file);
@@ -102,6 +102,33 @@ physician-only count.
   from `pcp_count` and ACS population, not by this loader.
 - **Vintage.** The file is refreshed roughly monthly; `period` is the release month
   (`YYYY-MM`) from the CMS metastore.
+
+## Health Need metrics (CDC PLACES) and HPSA interpretation
+
+**PLACES** county estimates are small-area, model-based (multilevel regression + post-stratification)
+estimates derived from the Behavioral Risk Factor Surveillance System (BRFSS), not direct counts or
+claims. `cdc_places` loads, for every registered measure, the latest `Year` published in the county
+file (2023 BRFSS in the 2025 release) and prefers the **age-adjusted** prevalence (`AgeAdjPrv`) so
+that markets with older populations are not flagged as "high need" purely because of age; where the
+age-adjusted cell is suppressed (population < 50) the crude value is used instead and the fallback
+is logged. Suppressed cells stay NULL. `no_checkup_pct` is `100 − CHECKUP` because PLACES publishes
+the share *with* a routine checkup. State values are an adult-population (`TotalPop18plus`) weighted
+mean of the county estimates – an approximation of the state rate that is fine for ranking states
+against each other but is not an official CDC state estimate. Kentucky and Pennsylvania had no 2023
+BRFSS data, so their counties have no PLACES values (the missing-data policy handles this).
+
+**HPSA** (`hrsa_hpsa`) uses HRSA's primary-care shortage designations. `hpsa_primary_care_flag` is 1
+when *any* primary-care HPSA component (geographic tract / county subdivision / single county, or a
+facility-based designation such as an FQHC, RHC or IHS site) in the county has status *Designated*
+or *Proposed For Withdrawal* (designations proposed for withdrawal remain in effect until HRSA
+withdraws them). A 0 is emitted for every county that appears in the file with only withdrawn
+designations, so "no shortage" is an explicit value rather than missing data; counties that never had
+any designation are absent from the file and therefore have no value. Because facility-based
+designations are counted, ~96 % of counties carry a 1 – the flag is best read as "HRSA-recognised
+under-service is present somewhere in the county". `hpsa_score_max` (0–25, higher = greater
+shortage) is the maximum score over the county's active components and is the more discriminating
+signal; it is NULL where the county has no active designation. `period` for HPSA rows is the
+`YYYY-MM` of the HRSA extract date, since the file is a rolling snapshot rather than a survey vintage.
 
 ## Versioning and reproducibility
 

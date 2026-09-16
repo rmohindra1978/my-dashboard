@@ -58,6 +58,16 @@ Measured (Sept 2026, cold cache):
 The CMS data API is keyless; both loaders probe successive `YEAR`s until the API returns an empty
 page, so a new CMS release is picked up by simply re-running (cached years are not re-fetched).
 
+Measured per source (download once, then cached; transform time and peak memory on a laptop-class VM):
+
+| source | raw file(s) | download | transform + load | peak RSS | rows loaded |
+|---|---|---|---|---|---|
+| `hrsa_hpsa` | `BCD_HPSA_FCT_DET_PC.csv` ≈ 48 MB (80 k component rows) | ~10 s | < 1 s | ~300 MB | 6,166 (3,083 counties × 2 metrics) |
+| `cdc_places` | `places_county_swc5-untb.csv` ≈ 53 MB (230 k rows) | ~20 s | < 1 s | ~300 MB | 21,042 (2,957 counties + 49 states × 7 metrics) |
+
+HRSA regenerates its extract frequently; delete `data/raw/hrsa_hpsa/BCD_HPSA_FCT_DET_PC.csv` to pick
+up new designations (rows land under a new `YYYY-MM` period; `market_features` keeps the latest).
+
 ## Production-style single process
 
 ```bash

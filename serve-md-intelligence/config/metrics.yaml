@@ -57,14 +57,16 @@ sources:
     name: Health Professional Shortage Areas - Primary Care
     publisher: Health Resources & Services Administration
     url: https://data.hrsa.gov/DataDownload/DD_Files/BCD_HPSA_FCT_DET_PC.csv
-    vintage: "current designations"
+    vintage: "current designations (file refreshed by HRSA; period = YYYY-MM of the extract)"
     geo_levels: [county]
+    notes: All component types (tract, county subdivision, single county, facility) count; a 0 flag is emitted for every county in the file.
   cdc_places:
     name: PLACES - Local Data for Better Health, County Data
     publisher: Centers for Disease Control and Prevention
-    url: https://data.cdc.gov/resource/swc5-untb.json
-    vintage: "2024 release (BRFSS 2022)"
-    geo_levels: [county]
+    url: https://data.cdc.gov/api/views/swc5-untb/rows.csv?accessType=DOWNLOAD
+    vintage: "2025 release (BRFSS 2023); period = latest Year per measure"
+    geo_levels: [state, county]
+    notes: Age-adjusted prevalence preferred, crude used when the age-adjusted cell is suppressed. State values are adult-population-weighted county means. KY and PA have no 2023 estimates.
   census_geo:
     name: Gazetteer files, 2020 relationship files and cartographic boundary files
     publisher: U.S. Census Bureau
@@ -395,9 +397,9 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
-    derivation: measureid = DIABETES, datavaluetypeid = AgeAdjPrv
+    derivation: measureid = DIABETES, datavaluetypeid = AgeAdjPrv (CrdPrv when suppressed); state = TotalPop18plus-weighted mean of counties
     scoring_default: 25
   - id: obesity_prevalence
     label: Obesity prevalence
@@ -406,7 +408,7 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
     derivation: measureid = OBESITY
     scoring_default: 10
@@ -417,7 +419,7 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
     derivation: measureid = BPHIGH
     scoring_default: 20
@@ -428,7 +430,7 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
     derivation: measureid = CHD
     scoring_default: 15
@@ -439,7 +441,7 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
     derivation: measureid = COPD
     scoring_default: 10
@@ -450,7 +452,7 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
     derivation: measureid = GHLTH
     scoring_default: 10
@@ -461,9 +463,9 @@ metrics:
     unit: pct
     format: percent
     higher_is_better: true
-    geo_levels: [county]
+    geo_levels: [state, county]
     source: cdc_places
-    derivation: measureid = CHECKUP
+    derivation: 100 - (measureid = CHECKUP, datavaluetypeid = AgeAdjPrv)
     scoring_default: 5
   - id: pct_65_plus_disability
     label: 65+ with a disability
