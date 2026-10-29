@@ -3,7 +3,7 @@ VENV ?= .venv
 PIP := $(VENV)/bin/pip
 PY := $(VENV)/bin/python
 
-.PHONY: setup setup-backend setup-frontend data data-sample dev api web test test-backend test-frontend lint fmt docs clean
+.PHONY: setup setup-backend setup-frontend data data-sample dev api web test test-backend test-frontend e2e lint fmt docs clean
 
 setup: setup-backend setup-frontend
 
@@ -40,6 +40,10 @@ test-backend:
 
 test-frontend:
 	cd frontend && npm run test -- --run
+
+## Playwright browser tests (builds the SPA, starts FastAPI on :8765 against a throwaway sample warehouse)
+e2e:
+	cd frontend && npm run e2e
 
 lint:
 	$(VENV)/bin/ruff check .

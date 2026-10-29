@@ -85,6 +85,7 @@ scenario writes.
 
 ```bash
 make test      # pytest -q (backend + pipelines), vitest
+make e2e       # Playwright golden-path suite (~30 s + build; see docs/testing.md)
 make lint      # ruff check + format --check, eslint, tsc
 ```
 
