@@ -33,6 +33,25 @@ Expected order of magnitude on a laptop: Census geography + ACS ≈ 5–10 min (
 enrollment / geographic variation ≈ 2 min, clinician file ≈ 1 min after download (3.4 M rows),
 HRSA / CDC < 1 min.
 
+### Census geography, ACS and Population Estimates (`census_geo`, `acs5`, `popest`)
+
+Run in this order (`--all` / `make data` do so automatically): `acs5` restricts ZCTAs to the
+`census_geo` universe and `dac_clinicians` needs its crosswalk. `pop_density` and the clinician
+ratios (`pcp_per_1000_65plus`, `pcp_per_10k_pop`) are computed by `pipelines/derived.py` after
+every build, so they appear once both inputs are loaded.
+
+Measured (Oct 2026, warm cache, single run of all three ≈ 65 s, peak RSS ≈ 750 MB):
+
+| source | raw file(s) | raw size | wall time | rows loaded |
+|---|---|---|---|---|
+| `census_geo` | 2023 Gazetteer (county / ZCTA / place), 2020 ZCTA→county relationship, OMB 2023 CBSA list, 2023 cartographic boundaries (state / county / place, 500k) + 2020 ZCTA boundaries (no 2023 ZCTA CB file exists); reuses ACS `Geos20235YR.txt` + `b01001` for place→county | ≈ 113 MB (+ 290 MB shared with `acs5`) | ≈ 50 s (mostly simplification) | geo_units 51 states, 3,144 counties, 33,354 ZCTAs, 32,037 places; crosswalk 85,713 rows; boundaries 68,586 rows |
+| `acs5` | 2019–2023 table-based Summary File: `Geos20235YR.txt` + 12 table `.dat` files | ≈ 860 MB | ≈ 15 s | 1,097,360 (16 metrics × 68.6 k geographies) |
+| `popest` | `cc-est2024-agesex-all.csv` | ≈ 9 MB | < 1 s | 6,390 (3,144 counties + 51 states × 2) |
+
+Stored GeoJSON after simplification: states 0.5 MB, counties 2.7 MB, places 15.6 MB, ZCTAs
+28.9 MB (national; the map endpoint's `states=` filter keeps ZCTA / place layers small).
+`/api/map/county` for the whole country is ≈ 4.6 MB.
+
 ### `dac_clinicians` (CMS Doctors & Clinicians)
 
 - Resolves the current CSV URL from the CMS metastore
