@@ -1,0 +1,5 @@
+USPS	GEOID	ANSICODE	NAME	ALAND	AWATER	ALAND_SQMI	AWATER_SQMI	INTPTLAT	INTPTLONG                                                                                                               
+AZ	04013	00037026	Maricopa County	23833110838	62124435	9202.016	23.986	33.345176	-112.49893                                                                                                             
+AZ	04019	00025446	Pima County	23798578895	5112015	9188.683	1.974	32.128038	-111.783657                                                                                                                  
+CT	09110	02830244	Capitol Planning Region	2660820519	48788205	1027.349	18.837	41.81697	-72.575886                                                                                                       
+PR	72001	01804480	Adjuntas Municipio	172726407	1051110	66.69	0.406	18.181611	-66.758165                                                                                                                 

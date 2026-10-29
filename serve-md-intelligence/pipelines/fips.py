@@ -21,3 +21,23 @@ def in_states(county_fips: pd.Series, sample: bool = False) -> pd.Series:
     if sample:
         return state.isin(SAMPLE_STATE_FIPS)
     return state.isin(STATE_FIPS)
+
+
+# ZCTAs in PR/VI (006-009xx), Guam/N. Mariana Is. (969xx) and American Samoa (96799) are territories.
+_TERRITORY_ZCTA_PREFIXES = ("006", "007", "008", "009", "969")
+# AZ (850-865) and TX (750-799, 885) ZIP prefixes, mirroring SAMPLE_STATE_FIPS.
+_SAMPLE_ZCTA_PREFIXES = ("85", "860", "863", "864", "865", "75", "76", "77", "78", "79", "885")
+
+
+def is_us_zcta(zcta: str) -> bool:
+    """5-digit ZCTA in the 50 states + DC (territory ranges excluded)."""
+    return (
+        len(zcta) == 5
+        and zcta.isdigit()
+        and not zcta.startswith(_TERRITORY_ZCTA_PREFIXES)
+        and zcta != "96799"
+    )
+
+
+def is_sample_zcta(zcta: str) -> bool:
+    return is_us_zcta(zcta) and zcta.startswith(_SAMPLE_ZCTA_PREFIXES)

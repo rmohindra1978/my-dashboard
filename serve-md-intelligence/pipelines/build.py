@@ -15,6 +15,7 @@ from pathlib import Path
 
 from backend.app.data.warehouse import rebuild_market_features, warehouse
 from backend.app.registry import load_metric_registry
+from pipelines.derived import compute_derived_metrics
 from pipelines.sources import SAMPLE_SOURCES, SOURCES
 
 
@@ -28,6 +29,10 @@ def build(sources: list[str], sample: bool, warehouse_path: Path | None = None) 
             if sid not in SOURCES:
                 raise SystemExit(f"unknown source '{sid}'. Registered: {sorted(SOURCES)}")
             results[sid] = SOURCES[sid](registry=registry).run(con, rebuild_features=False)
+        if sources:
+            # synthetic --sample fixtures already carry their derived values; only recompute for real loads
+            for metric_id, n in compute_derived_metrics(con).items():
+                results[f"derived:{metric_id}"] = n
         n = rebuild_market_features(con)
         logging.getLogger("pipelines").info("market_features rebuilt: %d rows", n)
     return results

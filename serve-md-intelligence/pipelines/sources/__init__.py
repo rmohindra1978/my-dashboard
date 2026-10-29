@@ -3,17 +3,20 @@
 from __future__ import annotations
 
 from pipelines.base import Source
+from pipelines.sources.acs5 import AcsSource
 from pipelines.sources.cdc_places import PlacesSource
+from pipelines.sources.census_geo import CensusGeoSource
 from pipelines.sources.cms_enrollment import EnrollmentSource
 from pipelines.sources.cms_geo_variation import GeoVariationSource
 from pipelines.sources.dac_clinicians import CliniciansSource
 from pipelines.sources.hrsa_hpsa import HpsaSource
+from pipelines.sources.popest import PopEstSource
 from pipelines.sources.sample import SampleFixtureSource
 
 SOURCES: dict[str, type[Source]] = {
-    # "census_geo": CensusGeoSource,          # Phase 1 data-engineering session
-    # "acs5": AcsSource,
-    # "popest": PopEstSource,
+    "census_geo": CensusGeoSource,
+    "acs5": AcsSource,
+    "popest": PopEstSource,
     "cms_geo_variation": GeoVariationSource,
     "cms_enrollment": EnrollmentSource,
     "dac_clinicians": CliniciansSource,

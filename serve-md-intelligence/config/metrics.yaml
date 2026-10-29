@@ -118,7 +118,7 @@ metrics:
     higher_is_better: true
     geo_levels: [state, county, zcta, place]
     source: acs5
-    derivation: sum(B01001_E022..E025) + sum(B01001_E046..E049)
+    derivation: sum(B01001_E023..E025) + sum(B01001_E047..E049)
     scoring_default: 10
   - id: median_age
     label: Median age
