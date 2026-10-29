@@ -1,0 +1,5 @@
+USPS	GEOID	ANSICODE	NAME	LSAD	FUNCSTAT	ALAND	AWATER	ALAND_SQMI	AWATER_SQMI	INTPTLAT	INTPTLONG                                                                                                 
+AZ	0455000	02411414	Phoenix city	25	A	1342469890	2592337	518.331	1.001	33.572154	-112.090132                                                                                                            
+AZ	0477000	02412104	Tucson city	25	A	627262641	819368	242.187	0.316	32.153036	-110.870773                                                                                                               
+CT	0937000	02378277	Hartford city	25	A	45012647	1751553	17.379	0.676	41.765933	-72.681579                                                                                                               
+PR	7206593	02415307	Bayamón zona urbana	62	S	70153371	164162	27.086	0.063	18.380055	-66.163253                                                                                                          
