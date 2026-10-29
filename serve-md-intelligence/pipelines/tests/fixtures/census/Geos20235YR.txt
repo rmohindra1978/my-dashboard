@@ -1,0 +1,68 @@
+FILEID|STUSAB|SUMLEVEL|COMPONENT|US|REGION|DIVISION|STATE|COUNTY|COUSUB|PLACE|TRACT|BLKGRP|CONCIT|AIANHH|AIANHHFP|AIHHTLI|AITS|AITSFP|ANRC|CBSA|CSA|METDIV|MACC|MEMI|NECTA|CNECTA|NECTADIV|UA|CDCURR|SLDU|SLDL|ZCTA5|SUBMCD|SDELM|SDSEC|SDUNI|UR|PCI|PUMA5|GEO_ID|NAME|BTTR|BTBG|TL_GEO_ID
+ACSSF|AZ|040|00||||04|||||||||||||||||||.|.|||||||||||||0400000US04|Arizona|||04
+ACSSF|NM|040|00||||35|||||||||||||||||||.|.|||||||||||||0400000US35|New Mexico|||35
+ACSSF|TX|040|00||||48|||||||||||||||||||.|.|||||||||||||0400000US48|Texas|||48
+ACSSF|PR|040|00||||72|||||||||||||||||||.|.|||||||||||||0400000US72|Puerto Rico|||72
+ACSSF|AZ|040|A0||||04|||||||||||||||||||.|.|||||||||||||04000A0US04|Arizona -- In metropolitan or micropolitan statistical area|||
+ACSSF|NM|040|A0||||35|||||||||||||||||||.|.|||||||||||||04000A0US35|New Mexico -- In metropolitan or micropolitan statistical area|||
+ACSSF|TX|040|A0||||48|||||||||||||||||||.|.|||||||||||||04000A0US48|Texas -- In metropolitan or micropolitan statistical area|||
+ACSSF|PR|040|A0||||72|||||||||||||||||||.|.|||||||||||||04000A0US72|Puerto Rico -- In metropolitan or micropolitan statistical area|||
+ACSSF|AZ|040|C0||||04|||||||||||||||||1||.|.|||||||||||||04000C0US04|Arizona -- In metropolitan statistical area|||
+ACSSF|NM|040|C0||||35|||||||||||||||||1||.|.|||||||||||||04000C0US35|New Mexico -- In metropolitan statistical area|||
+ACSSF|TX|040|C0||||48|||||||||||||||||1||.|.|||||||||||||04000C0US48|Texas -- In metropolitan statistical area|||
+ACSSF|PR|040|C0||||72|||||||||||||||||1||.|.|||||||||||||04000C0US72|Puerto Rico -- In metropolitan statistical area|||
+ACSSF|AZ|040|C1||||04|||||||||||||||||1||.|.|||||||||||Y||04000C1US04|Arizona -- In metropolitan statistical area -- in principal city|||
+ACSSF|NM|040|C1||||35|||||||||||||||||1||.|.|||||||||||Y||04000C1US35|New Mexico -- In metropolitan statistical area -- in principal city|||
+ACSSF|TX|040|C1||||48|||||||||||||||||1||.|.|||||||||||Y||04000C1US48|Texas -- In metropolitan statistical area -- in principal city|||
+ACSSF|PR|040|C1||||72|||||||||||||||||1||.|.|||||||||||Y||04000C1US72|Puerto Rico -- In metropolitan statistical area -- in principal city|||
+ACSSF|AZ|040|C2||||04|||||||||||||||||1||.|.|||||||||||||04000C2US04|Arizona -- In metropolitan statistical area -- not in principal city|||
+ACSSF|NM|040|C2||||35|||||||||||||||||1||.|.|||||||||||||04000C2US35|New Mexico -- In metropolitan statistical area -- not in principal city|||
+ACSSF|TX|040|C2||||48|||||||||||||||||1||.|.|||||||||||||04000C2US48|Texas -- In metropolitan statistical area -- not in principal city|||
+ACSSF|PR|040|C2||||72|||||||||||||||||1||.|.|||||||||||||04000C2US72|Puerto Rico -- In metropolitan statistical area -- not in principal city|||
+ACSSF|AZ|040|E0||||04|||||||||||||||||2||.|.|||||||||||||04000E0US04|Arizona -- In micropolitan statistical area|||
+ACSSF|NM|040|E0||||35|||||||||||||||||2||.|.|||||||||||||04000E0US35|New Mexico -- In micropolitan statistical area|||
+ACSSF|TX|040|E0||||48|||||||||||||||||2||.|.|||||||||||||04000E0US48|Texas -- In micropolitan statistical area|||
+ACSSF|PR|040|E0||||72|||||||||||||||||2||.|.|||||||||||||04000E0US72|Puerto Rico -- In micropolitan statistical area|||
+ACSSF|AZ|040|E1||||04|||||||||||||||||2||.|.|||||||||||Y||04000E1US04|Arizona -- In micropolitan statistical area -- in principal city|||
+ACSSF|NM|040|E1||||35|||||||||||||||||2||.|.|||||||||||Y||04000E1US35|New Mexico -- In micropolitan statistical area -- in principal city|||
+ACSSF|TX|040|E1||||48|||||||||||||||||2||.|.|||||||||||Y||04000E1US48|Texas -- In micropolitan statistical area -- in principal city|||
+ACSSF|PR|040|E1||||72|||||||||||||||||2||.|.|||||||||||Y||04000E1US72|Puerto Rico -- In micropolitan statistical area -- in principal city|||
+ACSSF|AZ|040|E2||||04|||||||||||||||||2||.|.|||||||||||||04000E2US04|Arizona -- In micropolitan statistical area -- not in principal city|||
+ACSSF|NM|040|E2||||35|||||||||||||||||2||.|.|||||||||||||04000E2US35|New Mexico -- In micropolitan statistical area -- not in principal city|||
+ACSSF|TX|040|E2||||48|||||||||||||||||2||.|.|||||||||||||04000E2US48|Texas -- In micropolitan statistical area -- not in principal city|||
+ACSSF|PR|040|E2||||72|||||||||||||||||2||.|.|||||||||||||04000E2US72|Puerto Rico -- In micropolitan statistical area -- not in principal city|||
+ACSSF|AZ|040|G0||||04|||||||||||||||||9||.|.|||||||||||||04000G0US04|Arizona -- Not in metropolitan or micropolitan statistical area|||
+ACSSF|NM|040|G0||||35|||||||||||||||||9||.|.|||||||||||||04000G0US35|New Mexico -- Not in metropolitan or micropolitan statistical area|||
+ACSSF|TX|040|G0||||48|||||||||||||||||9||.|.|||||||||||||04000G0US48|Texas -- Not in metropolitan or micropolitan statistical area|||
+ACSSF|PR|040|G0||||72|||||||||||||||||9||.|.|||||||||||||04000G0US72|Puerto Rico -- Not in metropolitan or micropolitan statistical area|||
+ACSSF|AZ|040|H0||||04|||||||||||||||||||.|.|||||||||||||04000H0US04|Arizona -- Not in metropolitan statistical area|||
+ACSSF|NM|040|H0||||35|||||||||||||||||||.|.|||||||||||||04000H0US35|New Mexico -- Not in metropolitan statistical area|||
+ACSSF|TX|040|H0||||48|||||||||||||||||||.|.|||||||||||||04000H0US48|Texas -- Not in metropolitan statistical area|||
+ACSSF|PR|040|H0||||72|||||||||||||||||||.|.|||||||||||||04000H0US72|Puerto Rico -- Not in metropolitan statistical area|||
+ACSSF|AZ|040|01||||04|||||||||||||||||||.|.||||||||||U|||040C201US04|Arizona -- Urban|||
+ACSSF|NM|040|01||||35|||||||||||||||||||.|.||||||||||U|||040C201US35|New Mexico -- Urban|||
+ACSSF|TX|040|01||||48|||||||||||||||||||.|.||||||||||U|||040C201US48|Texas -- Urban|||
+ACSSF|PR|040|01||||72|||||||||||||||||||.|.||||||||||U|||040C201US72|Puerto Rico -- Urban|||
+ACSSF|AZ|040|43||||04|||||||||||||||||||.|.||||||||||R|||040C243US04|Arizona -- Rural|||
+ACSSF|NM|040|43||||35|||||||||||||||||||.|.||||||||||R|||040C243US35|New Mexico -- Rural|||
+ACSSF|TX|040|43||||48|||||||||||||||||||.|.||||||||||R|||040C243US48|Texas -- Rural|||
+ACSSF|PR|040|43||||72|||||||||||||||||||.|.||||||||||R|||040C243US72|Puerto Rico -- Rural|||
+ACSSF|AZ|050|00||||04|013||||||||||||||||||.|.|||||||||||||0500000US04013|Maricopa County, Arizona|||04013
+ACSSF|AZ|050|00||||04|021||||||||||||||||||.|.|||||||||||||0500000US04021|Pinal County, Arizona|||04021
+ACSSF|NM|050|00||||35|001||||||||||||||||||.|.|||||||||||||0500000US35001|Bernalillo County, New Mexico|||35001
+ACSSF|TX|050|00||||48|301||||||||||||||||||.|.|||||||||||||0500000US48301|Loving County, Texas|||48301
+ACSSF|PR|050|00||||72|127||||||||||||||||||.|.|||||||||||||0500000US72127|San Juan Municipio, Puerto Rico|||72127
+ACSSF|AZ|155|00||||04|013||55000||||||||||||||||.|.|||||||||||||1550000US0455000013|Maricopa County (part), Phoenix city, Arizona|||
+ACSSF|AZ|155|00||||04|013||58150||||||||||||||||.|.|||||||||||||1550000US0458150013|Maricopa County (part), Queen Creek town, Arizona|||
+ACSSF|AZ|155|00||||04|021||58150||||||||||||||||.|.|||||||||||||1550000US0458150021|Pinal County (part), Queen Creek town, Arizona|||
+ACSSF|NM|155|00||||35|001||02000||||||||||||||||.|.|||||||||||||1550000US3502000001|Bernalillo County (part), Albuquerque city, New Mexico|||
+ACSSF|PR|155|00||||72|127||76770||||||||||||||||.|.|||||||||||||1550000US7276770127|San Juan Municipio (part), San Juan zona urbana, Puerto Rico|||
+ACSSF|AZ|160|00||||04|||55000||||||||||||||||.|.|||||||||||||1600000US0455000|Phoenix city, Arizona|||0455000
+ACSSF|AZ|160|00||||04|||58150||||||||||||||||.|.|||||||||||||1600000US0458150|Queen Creek town, Arizona|||0458150
+ACSSF|NM|160|00||||35|||02000||||||||||||||||.|.|||||||||||||1600000US3502000|Albuquerque city, New Mexico|||3502000
+ACSSF|PR|160|00||||72|||76770||||||||||||||||.|.|||||||||||||1600000US7276770|San Juan zona urbana, Puerto Rico|||7276770
+ACSSF|PR|860|00|||||||||||||||||||||||.|.|||||00901||||||||860Z200US00901|ZCTA5 00901|||00901
+ACSSF|US|860|00|||||||||||||||||||||||.|.|||||79754||||||||860Z200US79754|ZCTA5 79754|||79754
+ACSSF|US|860|00|||||||||||||||||||||||.|.|||||85004||||||||860Z200US85004|ZCTA5 85004|||85004
+ACSSF|US|860|00|||||||||||||||||||||||.|.|||||85142||||||||860Z200US85142|ZCTA5 85142|||85142
+ACSSF|US|860|00|||||||||||||||||||||||.|.|||||87102||||||||860Z200US87102|ZCTA5 87102|||87102

@@ -71,6 +71,34 @@ For a geography level `L` (county, ZCTA, place, state) and a score configuration
 - Territories (PR, VI, GU, AS, MP), "Unknown"/"Foreign" counties (`xx999`) and national rows are
   dropped from all CMS loaders; only the 50 states + DC and their counties are loaded.
 
+## Geography, ACS and population growth (`census_geo`, `acs5`, `popest`)
+
+- Universe: the 50 states + DC and their counties (2023 Gazetteer), ZCTAs and places; territories
+  are dropped everywhere. IDs keep their zero padding (state 2, county 5, ZCTA 5, place 7 digits).
+- ZCTAs have no state of their own: `state_fips` / `state_abbr` / CBSA come from the county holding
+  the largest land-area share of the ZCTA in the 2020 ZCTA→county relationship file. ZCTA→county
+  crosswalk weights are those land-area shares (water share for all-water ZCTAs).
+- Place→county weights are population shares from ACS summary level 155 (state-place-county parts,
+  `B01001_E001`); Census publishes no national 2020 place→county relationship file. Places with
+  zero population in every part split evenly. A place's CBSA is that of its majority county.
+- Place names drop the trailing legal/statistical descriptor (`Phoenix city` → `Phoenix`,
+  `Abanda CDP` → `Abanda`). The place layer includes CDPs (≈ 32 k places, not just ≈ 19 k
+  incorporated places) so unincorporated communities are searchable.
+- County CBSA codes/titles come from the OMB July 2023 delineation (list 1); counties outside any
+  CBSA have NULL `cbsa_code`.
+- Boundaries are the Census cartographic boundary files simplified with Shapely
+  (`preserve_topology`), tolerance 0.01° state / 0.005° county / 0.003° ZCTA / 0.002° place, and
+  snapped to a 1e-4° grid. They are for display, not area computation.
+- ACS 2019–2023 5-year estimates: annotation sentinels (`-666666666` etc.) and any negative value
+  become NULL. Multi-cell sums (e.g. 65+ = male + female age bands) are NULL if any cell is missing,
+  and ratios are NULL when the denominator is 0; percentages are 0–100. Margins of error are not
+  stored. Derivations are listed in the data dictionary.
+- `popest` growth compares the Vintage 2024 estimate (YEAR 6, 7/1/2024) with the 4/1/2020 estimates
+  base (YEAR 1) for `POPESTIMATE` and `AGE65PLUS_TOT`; state values use summed county counts. A zero
+  base yields NULL.
+- `pop_density = pop_total (ACS) / land_area_sqmi (Gazetteer)`; clinician ratios use ACS
+  denominators. Derived rows carry the numerator's period and the metric's registry source.
+
 ## Provider supply (`dac_clinicians`)
 
 Primary-care supply comes from the CMS Doctors & Clinicians National Downloadable File (one row
